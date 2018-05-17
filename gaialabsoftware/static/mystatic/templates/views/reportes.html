@@ -1,0 +1,83 @@
+
+
+<panel-table 
+	search-url ='api/estudios_model/?search='
+	search-field="false" 
+	panel-title="Reportes"
+	advanced-search = "false"
+	search-date-field="false"
+	placeholder="Buscar"
+	results-list = "listaEstudios"
+>
+				<extra-element>
+
+<!-- 					    <label class="sr-only">Filtrar por:</label>
+					    <select ng-model="transclusion.filtro" name="dateRange"">
+					    	<option value="">Tipo Estudio:</option>
+					    	<option value="citologia">Citologia</option>
+					    	<option value="biopsia">Biopsia</option>
+					    </select>
+
+					    <label class="sr-only">Tipo Cliente:</label>
+					    <select ng-model="transclusion.filtro2" name="dateRange"">
+					    	<option value="">Filtrar por:</option>
+					    	<option value="postpago">Post Pago</option>
+					    	<option value="normal">Normal</option>
+					    </select> -->
+				</extra-element>
+	<p class="text-center"><b>Mostrando:</b> [[reportesData.dt|date:'MMMM yyyy'|capitalize]]</p>
+	<table class="table table-condensed table-striped table-responsive">
+	 		<div class="row" style="max-width:700px;margin:10px;">
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Resetear busqueda" type="button" ng-click="refreshList()" class="btn btn-info">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
+						</button>
+
+	 			</div>
+
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Buscar entre Fechas" type="button" ng-click="open1()" class="btn btn-info">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</button>
+	        <p class="input-group">
+	          <input type="text" show-button-bar ="false" ng-change="queryDate()" uib-datepicker-popup="[[format]]" ng-model="reportesData.dt" is-open="popup1.opened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-show="false">
+	        </p>
+	 			</div>
+						<div ng-show="resultados > 0" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<!-- <button ng-click="searchByModal()" type="button" class="btn btn-info">Search by:</button> -->
+							<span><b>[[resultados]]</b> resultados encontrados para <b>"[[resultsFor]]"</b></span>
+						</div>	
+	 		</div>
+		<thead>
+			<tr style="font-weight:bold;">
+<!-- 				<td>ID</td>
+				<td>Nro Secuencia</td>
+				<td>Paciente</td> -->
+				<th style="text-align: center;">Fecha</th>
+				<th style="text-align: center;">Cantidad</th>
+				<th style="text-align: center;">Total</th>
+				<th style="text-align: center;">Ver</th>
+			</tr>
+<!-- 			<tr class="warning" style="font-weight:bold;">
+				<td>[[listaEstudios.length]] estudios</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>[[totalPrecio()|currency : 'Bs. ':2]]</td>
+			</tr> -->
+		</thead>
+		<tbody>
+			<tr ng-repeat="reporte in reportes"><!--| orderBy:'-created' | filter:{tipo:transclusion.filtro, tipo_cliente:transclusion.filtro2}|{transclusion.filtro2}-->
+				<td align="center">[[reporte.day|date:'dd-MMMM-yyyy']]</td>
+				<td align="center">[[reporte.c]]</td>
+				<td align="center">Bs. [[reporte.monto|number:2]]</td>
+				<td align="center"><button ng-click="printReport(reporte)" type="button" class="btn btn-primary"><i class="fa fa-file"></i></button></td>
+<!-- 				<td>[[estudio.tipo|capitalize]]</td>
+				<td>[[estudio.estudio_realizado.nombre|capitalize]]</td>
+				<td>[[estudio.estudio_realizado.precio|currency : 'Bs. ':2]]</td> -->
+			</tr>
+		</tbody>
+	</table>
+</panel-table>

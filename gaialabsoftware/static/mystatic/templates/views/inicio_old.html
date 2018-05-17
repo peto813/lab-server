@@ -1,0 +1,573 @@
+
+
+
+<head>
+	<style type="text/css">
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 70px;
+}
+
+#totalsRow{
+	font-size: 12px;
+}
+/*
+ * Global add-ons
+ */
+
+/*.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}*/
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+/*.navbar-fixed-top {
+  border: 0;
+}*/
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+/*.app_sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+	display: visible;
+}*/
+
+
+
+/* Sidebar navigation */
+/*
+.nav-sidebar {
+  margin-right: -21px; 
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+*/
+/*
+@media (max-width: 768px) {
+	.app_sidebar {
+	  display: none;
+	}
+
+}*/
+
+
+
+
+
+/*
+@media (max-width: 1200px) {
+	.actionButtons button{
+		margin-bottom: 20px;
+	}
+
+}*/
+
+/*#cedula{
+	style="max-width:200px;"
+}
+*/
+
+/*
+ * Main content
+ */
+
+/*.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+*/
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+/*.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+*/
+
+/*.fa{
+	cursor: pointer;
+}
+
+.fa-heartbeat
+{
+	font-size: 10em;
+}
+
+.fa-stethoscope
+{
+	font-size: 10em;
+}
+
+.fa-medium
+{
+	font-size: 10em;
+}
+.fa-user-md
+{
+	font-size: 10em;
+}
+*/
+
+/*.fa:hover {
+	background: rgba(255,255,255,1);
+	color: #64bb5d;
+}
+
+.fa:active  {
+	background: rgb(242,241,240);
+	color: rgb(66,139,202);
+}*/
+#ingresoPacienteForm.form-control[type="email"], #ingresoPacienteForm.form-control[type="text"], #ingresoPacienteForm.form-control[type="number"], #ingresoPacienteForm.form-control[type="date"], #ingresoPacienteForm >select{
+	margin-top:20px;
+
+}
+
+
+
+
+
+/*.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+ .table-fixed tbody, .table-fixed tr, .table-fixed td, {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+
+  border-bottom-width: 0;
+}*/
+	</style>
+
+
+
+</head>
+  <body>
+
+
+
+    <div class="container-fluid">
+    	<tab-element tab-list="pacienteTabList"></tab-element>
+          <!-- <h1 class="page-header">Panel de Control</h1> -->
+
+<!--           <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <i class="fa fa-heartbeat" aria-hidden="true" onclick="goToPatients()"></i>
+              <h4>1. Pacientes</h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <i class="fa fa-stethoscope" aria-hidden="true" onclick="goToBiopsias()"></i>
+
+              <h4>2. Biopsias/Citologias</h4>
+        </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+			<i class="fa fa-medium" aria-hidden="true" onclick="goToResults()"></i>
+              <h4>3. Resultados</h4>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+			<i class="fa fa-user-md" aria-hidden="true" onclick="goToCodes()"></i>
+              <h4>4. Referencia Codigos</h4>
+
+            </div>
+          </div> -->
+<!-- 
+        <h2 class="sub-header">Dashboard</h2> -->
+        <div class="row">
+        <!--SIDEBAR-->
+<!--           	<div class="col-lg-2">
+          		<div id="sidebar" ng-include="'static/templates/partials/sidebar.html'"></div>
+          	</div> -->
+
+          	<div class="col-lg-12">
+	         	<div class="panel panel-info">
+				  <div class="panel-heading">
+		          	<h3>Pacientes</h3>
+		          	<hr>
+
+      	     <div class="row placeholders">
+	            <div class="col-xs-6 col-sm-3 placeholder">
+	              <!-- <i class="fa fa-heartbeat" aria-hidden="true" onclick="goToPatients()"></i> -->
+	              <button ng-if="patientFound" ng-click="agregarResultados(formData)" type="button" class="btn btn-info">Agregar Resultados</button>
+	            </div>
+            </div>
+<!-- 			          		<div class="row actionButtons">
+			          			<div class="col-lg-4">
+				          			<button class="btn btn-default" ng-click="agregarExamen()">
+				          				<i title="Registro de examenes" class="fa fa-flask" aria-hidden="true"></i><span style="margin-left: 5px;font-weight: bold;" >Registrar examenes ( Ctrl 1)</span>
+				          			</button>
+			          			</div>
+			          			<div class="col-lg-4">
+				          			<button class="btn btn-default">
+				          				<i class="fa fa-file" aria-hidden="true"></i><span style="margin-left: 5px;font-weight: bold;" ng-click="">Registrar resultados ( Ctrl 2)</span>
+				          			</button>         				
+			          			</div>
+			          		</div>	 -->          			
+
+
+				  </div>
+				  <div class="panel-body">
+	          	<form ng-submit="ingresarPaciente()" name="ingresoPacienteForm" id="ingresoPacienteForm" class="form" autocomplete="off" novalidate>
+
+
+
+		          	<div class="row">
+		          		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" >
+
+
+
+				        <div class="row">
+					        <div class="col-xs-4 col-sm-5 col-md-4 col-lg-3">
+				          		<div class="form-group">
+					          		<label for="nacionalidad" class="sr-only" >Nacionalidad</label>
+						          	<select id = "nacionalidad" name = "nacionalidad" ng-model="formData.nacionalidad" class="form-control" required>
+						          		<option option="V">V</option>
+						          		<option option="E">E</option>		          			
+						          	</select>
+						        </div>
+					        </div>
+
+				        	<div class="col-xs-8 col-sm-7 col-md-8 col-lg-9">
+						        <div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.cedula.$valid && (ingresoPacienteForm.cedula.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.cedula.$valid && (ingresoPacienteForm.cedula.$touched || ingresoPacienteForm.$submitted) }" >
+					          		
+					          		<input  id="cedula" ng-blur="findPatient()"  type="number" ng-model="formData.cedula" name="cedula" class="form-control" placeholder="Cedula" required>
+					          		<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.cedula.$valid && (ingresoPacienteForm.cedula.$touched || ingresoPacienteForm.cedula.$dirty), 'glyphicon-remove': (ingresoPacienteForm.cedula.$invalid && (ingresoPacienteForm.cedula.$touched || ingresoPacienteForm.cedula.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>		
+						        </div>	        		
+				        	</div>
+
+
+
+				        </div>
+
+
+		          		</div>
+
+		          		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.nombres.$valid && (ingresoPacienteForm.nombres.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.nombres.$valid && (ingresoPacienteForm.nombres.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="nombres" class="sr-only">Nombres</label>		
+								<input ng-disabled="!form_editable" id="nombres" type="text" ng-model= "formData.nombres" name="nombres" class="form-control" placeholder="Nombres" required>
+							<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.nombres.$valid && (ingresoPacienteForm.nombres.$touched || ingresoPacienteForm.nombres.$dirty), 'glyphicon-remove': (ingresoPacienteForm.nombres.$invalid && (ingresoPacienteForm.nombres.$touched || ingresoPacienteForm.nombres.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>	
+							</div>	          			
+		          		</div>
+		          		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.apellidos.$valid && (ingresoPacienteForm.apellidos.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.apellidos.$valid && (ingresoPacienteForm.apellidos.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="apellidos" class="sr-only">Apellidos</label>		
+								<input ng-disabled="!form_editable" id="apellidos" type="text" ng-model= "formData.apellidos" name="apellidos" class="form-control" placeholder="Apellidos" required>
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.apellidos.$valid && (ingresoPacienteForm.apellidos.$touched || ingresoPacienteForm.apellidos.$dirty), 'glyphicon-remove': (ingresoPacienteForm.apellidos.$invalid && (ingresoPacienteForm.apellidos.$touched || ingresoPacienteForm.apellidos.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>
+							</div>	          			
+		          		</div>
+		          	</div>
+
+
+		          	<div class="row">
+
+		          		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.fecha_nacimiento.$valid && (ingresoPacienteForm.fecha_nacimiento.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.fecha_nacimiento.$valid && (ingresoPacienteForm.fecha_nacimiento.$touched || ingresoPacienteForm.$submitted) }" >
+
+								<div class="input-group">
+									<label for="fecha_nacimiento" class="sr-only">Fecha de Nacimiento</label>
+									<input ng-disabled="!form_editable" id="fecha_nacimiento" uib-datepicker-popup="[[format]]" type="text" name="fecha_nacimiento" max-date-today  ng-model="formData.fecha_nacimiento" class="form-control" placeholder="F. Nac ( ddmmyyyy )" required>
+									<span class="input-group-addon form-inline">
+										<span><b>Edad: </b></span>
+										<span ng-if="formData.fecha_nacimiento">
+											[[formData.fecha_nacimiento|ageFilter]]
+										</span>								
+									</span>
+								</div>
+
+
+
+							</div>      			
+		          		</div>
+
+
+		          		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.sexo.$valid && (ingresoPacienteForm.sexo.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.sexo.$valid && (ingresoPacienteForm.sexo.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="sexo" class="sr-only">Sexo</label>
+								<select ng-disabled="!form_editable" ng-model="formData.sexo" name="sexo" id="sexo" class="form-control" required>
+									<option value="" readonly>Sexo</option>
+									<option value="M">M</option>
+									<option value="F">F</option>
+								</select>
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.sexo.$valid && (ingresoPacienteForm.sexo.$touched || ingresoPacienteForm.sexo.$dirty), 'glyphicon-remove': (ingresoPacienteForm.sexo.$invalid && (ingresoPacienteForm.sexo.$touched || ingresoPacienteForm.sexo.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>
+							</div>   			
+		          		</div>
+		        		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.celular.$valid && (ingresoPacienteForm.celular.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.celular.$valid && (ingresoPacienteForm.celular.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="Celular" class="sr-only">Celular</label>
+								<input ng-disabled="!form_editable" id="Celular" type="text" ng-model="formData.celular" name="celular" class="form-control" placeholder="Celular" ng-pattern="/^[0-9]*$/" minlength="11">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.celular.$valid && (ingresoPacienteForm.celular.$touched || ingresoPacienteForm.celular.$dirty), 'glyphicon-remove': (ingresoPacienteForm.celular.$invalid && (ingresoPacienteForm.celular.$touched || ingresoPacienteForm.celular.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span> 				
+							</div>      			
+		        		</div>
+		          	</div>
+
+
+		          	<div class="row">
+<!-- 		        		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.medicoReferido.$valid && (ingresoPacienteForm.medicoReferido.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.medicoReferido.$valid && (ingresoPacienteForm.medicoReferido.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="medicoReferida" class="sr-only">
+									Medico referido
+								</label>
+								<input ng-disabled="patientFound" type="text" ng-model="formData.medicoReferido" id="medicoReferido" name="medicoReferido" class="form-control" placeholder="Medico referido">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.medicoReferido.$valid && (ingresoPacienteForm.medicoReferido.$touched || ingresoPacienteForm.medicoReferido.$dirty), 'glyphicon-remove': (ingresoPacienteForm.medicoReferido.$invalid && (ingresoPacienteForm.medicoReferido.$touched || ingresoPacienteForm.medicoReferido.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>
+							</div>
+		        		</div> -->
+<!-- 		        		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.clinicaRef.$valid && (ingresoPacienteForm.clinicaRef.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.clinicaRef.$valid && (ingresoPacienteForm.clinicaRef.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="clinicaRef" class="sr-only">Clinica Referida</label>
+								<input ng-disabled="patientFound" id="clinicaRef" ng-model="formData.clinicaRef" type="text" name="clinicaRef" class="form-control" placeholder="Clinica referida">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.clinicaRef.$valid && (ingresoPacienteForm.clinicaRef.$touched || ingresoPacienteForm.clinicaRef.$dirty), 'glyphicon-remove': (ingresoPacienteForm.clinicaRef.$invalid && (ingresoPacienteForm.clinicaRef.$touched || ingresoPacienteForm.clinicaRef.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>		
+							</div> 			
+		        		</div> -->
+
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.email.$valid && (ingresoPacienteForm.email.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.email.$valid && (ingresoPacienteForm.email.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="email" class="sr-only">Email</label>
+								<input ng-disabled="!form_editable" ng-model="formData.email" id="email" type="email" name="email" class="form-control" placeholder="Correo electronico">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.email.$valid && (ingresoPacienteForm.email.$touched || ingresoPacienteForm.email.$dirty), 'glyphicon-remove': (ingresoPacienteForm.email.$invalid && (ingresoPacienteForm.email.$touched || ingresoPacienteForm.email.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span> 
+							</div>
+						</div>
+		          		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.direccion.$valid && (ingresoPacienteForm.direccion.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.direccion.$valid && (ingresoPacienteForm.direccion.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="direccion" class="sr-only">Ciudad</label>
+								<input ng-disabled="!form_editable" type="text" id="direccion" ng-model="formData.direccion" name="direccion" class="form-control" minlength="3" placeholder="Direccion">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.direccion.$valid && (ingresoPacienteForm.direccion.$touched || ingresoPacienteForm.direccion.$dirty), 'glyphicon-remove': (ingresoPacienteForm.direccion.$invalid && (ingresoPacienteForm.direccion.$touched || ingresoPacienteForm.direccion.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>
+							</div>          			
+		          		</div>
+		          	</div>
+
+<!-- 		         	<div class="row">
+		          		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.ciudad.$valid && (ingresoPacienteForm.ciudad.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.ciudad.$valid && (ingresoPacienteForm.ciudad.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="ciudad" class="sr-only">Ciudad</label>
+								<input ng-disabled="patientFound" type="text" id="ciudad" ng-model="formData.ciudad" name="ciudad" class="form-control" minlength="3" placeholder="Direccion">
+								<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : ingresoPacienteForm.ciudad.$valid && (ingresoPacienteForm.ciudad.$touched || ingresoPacienteForm.ciudad.$dirty), 'glyphicon-remove': (ingresoPacienteForm.ciudad.$invalid && (ingresoPacienteForm.ciudad.$touched || ingresoPacienteForm.ciudad.$dirty || ingresoPacienteForm.$submitted )) }" aria-hidden="true"></span>
+							</div>          			
+		          		</div>
+
+		         	</div> -->
+
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : ingresoPacienteForm.observaciones.$valid && (ingresoPacienteForm.observaciones.$touched || ingresoPacienteForm.$submitted), 'has-error' : !ingresoPacienteForm.observaciones.$valid && (ingresoPacienteForm.observaciones.$touched || ingresoPacienteForm.$submitted) }" >
+								<label for="observaciones" class="sr-only">Observaciones</label>
+								<textarea ng-disabled="!form_editable" style="min-width: 100%" id="observaciones" type="text" name="observaciones" class="form-control" ng-model="formData.observaciones" placeholder="Observaciones"></textarea> 
+							</div>	
+						</div>				
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+						<div style="float:right;">
+							<button title="Editar Paciente" type="button" ng-click="cancelarEdicion()" ng-if="patch_method==true" class="btn btn-danger btn-lg">Cancelar Edicion</button>
+							<button title="Editar Paciente" type="button" ng-click="editPatient()" ng-if="patientFound" class="btn btn-info btn-lg">Editar</button>
+							<input type="submit" title="Guardar" ng-disabled="!ingresoPacienteForm.$valid||!form_editable" value="Ingresar" class="btn btn-lg btn-success">
+
+						</div>
+
+						</div>				
+					</div>
+	          	</form>
+     
+<div class="row">
+	<div class="col-xs-12 col-sm-4">
+		<h3>Estudios</h3>
+	</div>
+</div>
+<form ng-submit="addEstudio()" name="addPruebaForm" autocomplete="off"  novalidate>
+		<div class="row">
+			
+				<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+					 <div class="form-group has-feedback" ng-class="{ 'has-success' : addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.$submitted), 'has-error' : !addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.$submitted) }" >
+						<label for="doctor_referido" class="sr-only">Medico Referido</label>
+						<input ng-disabled="!patientFound" ng-model="estudioData.medico" ng-model-options="modelOptions" uib-typeahead="medico for medico in medico_referido_typeahead | filter:$viewValue | limitTo:8|unique" typeahead-min-length="0" type="text" id="medico_referido" placeholder="Medico Refererido"  name="medico_referido" class="form-control" required>
+					<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.medico_referido.$dirty), 'glyphicon-remove': (addPruebaForm.medico_referido.$invalid && (addPruebaForm.medico_referido.$touched || addPruebaForm.medico_referido.$dirty || addPruebaForm.$submitted )) }" aria-hidden="true"></span>
+					</div>					
+				</div>
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+					<div class="form-group">
+						<label for="clinica_referida" class="sr-only">Clinica Refererida</label>
+						<input ng-model="estudioData.clinica" ng-model-options="modelOptions" uib-typeahead="clinica for clinica in clinica_referida_typeahead | filter:$viewValue | limitTo:8|unique" typeahead-min-length="0" type="text" id="clinica_referida" placeholder="Clinica Refererida" ng-disabled="!patientFound" name="clinica_referida" class="form-control">
+					</div>					
+				</div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+					<span style="float:right;margin-top: -5px;">
+						<label>Otro Contribuyente </label>
+						<span><input ng-disabled="!ingresoPacienteForm.$valid" type="checkbox" ng-model="otroCotribuyente" name="otroCotribuyente"></span>
+					</span>
+					
+				</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+
+				<div class="form-group">
+					<label for="nombre" class="sr-only">Nombre de prueba</label>
+					<select ng-disabled="!patientFound" ng-options="estudio.nombre|capitalize for estudio in estudios track by estudio.id" class="form-control" name="prueba" id="prueba" ng-model="estudioData.prueba" ng-change="fillSubPrueba()" required>
+						 <option value="" disabled>Estudio</option> 
+					</select>
+				</div>	
+			</div>
+
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+				<div class="form-group has-feedback" ng-class="{ 'has-success' : addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.$submitted), 'has-error' : !addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.$submitted) }" >
+					<div class="input-group">
+
+						<label for="nombre" class="sr-only">Nombre de sub tipo. prueba</label>
+<!-- 						<select ng-disabled="!estudioData.prueba" class="form-control" ng-options="option.nombre|capitalize for option in estudioData.prueba.sub_tipos_estudios track by option.id" ng-model="estudioData.subprueba" name="subprueba" required >
+							<option value="">Seleccione Sub-Estudio</option> 
+						</select>
+ -->
+
+
+ <!--| filter:$viewValue | limitTo:8-->
+ 						<input ng-disabled="!estudioData.prueba" typeahead-editable = "false" ng-model="estudioData.subprueba"  uib-typeahead="estudio.nombre for estudio in subPruebaTypeahead|filter:$viewValue | limitTo:8" typeahead-min-length="4" type="text" id="subprueba" placeholder="Estudio"  name="subprueba" class="form-control" required>
+
+ 						<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.subprueba.$dirty), 'glyphicon-remove': (addPruebaForm.subprueba.$invalid && (addPruebaForm.subprueba.$touched || addPruebaForm.subprueba.$dirty || addPruebaForm.$submitted )) }" aria-hidden="true"></span>
+						<div class="input-group-btn">
+							<button ng-disabled="!addPruebaForm.$valid" title="Anexar Prueba"  type="submit" class="btn btn-primary">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>			
+					</div>
+				</div>	
+			</div>
+
+			<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+				<button style="float:right;margin-top: -5px;" title="Imprimir" ng-click="imprimir()" ng-disabled= "!estudiosAgregados.length>0||!formData.tipo=='Normal'" class="btn btn-primary">
+					<i class="fa fa-print fa-2x"></i>
+				</button>
+			</div>
+
+
+		</div>
+</form>	
+
+
+
+<div class="row" style="margin-top:5px;">
+	<div class="col-xs-12 well">
+		<div class="row" style="margin-bottom: 5px;margin-top: 5px;">
+			<div class="col-xs-1 col-sm-1" style="max-width: 45px;">
+				<button title="Borrar" ng-click="borrarExamenesSelecionados()" class="btn btn-danger" ng-if="estudiosAgregados.length>0">
+					<i class="fa fa-trash"></i>
+				</button>
+			</div>
+			<div class="col-xs-10 col-sm-2" ng-if="estudiosAgregados.length>0">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button title="Aplicar Descuento" class="btn btn-primary" ng-click="toggleDiscount()">
+								<i class="fa fa-long-arrow-down" aria-hidden="true"></i>
+							</button>
+						</div>
+					<input type="number" ng-model="finanzas.descuento" step="0.01" min="0" max="100"  name="discount" placeholder="Descuento" class="form-control" ng-if="displayDiscount">
+					<span class="input-group-addon" ng-if="displayDiscount">%</span>
+					</div>			
+				</div>
+			</div>
+
+			<div class="col-xs-2 col-sm-2 pull-right">
+				<label>Total:</label>[[totalEstudios()|currency :'Bs. ' : 2]]
+			</div>	
+		</div>
+		<table class="table table-condensed table-striped table-bordered table-responsive">
+			<thead>
+				<tr class="info text-center" style="font-weight:bold;" ng-show="estudiosAgregados.length>0">
+					<td><input type="checkbox" name="selectAll" ng-model="selectAll" ng-change="selectAllchx()"></td>
+					<td>Descripcion</td>
+					<td>Costo</td>
+					<td>Medico Ref.</td>
+					<td>Clinica Ref.</td>
+				</tr>
+<!-- 				<tr class="warning" id="totalsRow" ng-if="estudiosAgregados.length>0">
+					<td class ="text-center">-</td>
+					<td class ="text-center">-</td>
+					<td class ="text-center">-</td>
+					<td >Total:</td>
+					<td><b>[[totalEstudios()|currency :'Bs. ' : 2]]</b><span ng-if="finanzas.descuento>0"> ( Desc. [[finanzas.descuento]] %)</span></td>
+				</tr> -->
+			</thead>
+			<tbody>
+				<tr ng-if="estudiosAgregados.length>0" ng-repeat="examen in estudiosAgregados">
+					<td class="text-center"><input type="checkbox" ng-model="examen.checked"></td>
+					<td>[[examen.estudio|capitalize]]</td>
+					<td>[[examen.precio|currency :'Bs. ' : 2]]</td>
+					<td>[[examen.medico|capfirstlettereachword]]</td>
+					<td>[[examen.clinica|capfirstlettereachword]]</td>
+				</tr>
+				<tr ng-if="!estudiosAgregados.length>0">
+					<td><b>No ha agregado estudios</b></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+				  </div>
+	         	</div>
+
+
+          	</div>
+          
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+</body>

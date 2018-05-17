@@ -1,0 +1,127 @@
+<head>
+  <style type="text/css">
+    body {
+      padding-top: 150px;
+    } 
+
+    .infor-div{
+      padding-top: 35px;
+      margin:0 auto;
+      width:50%;
+    }
+    .fa-times{
+      color: red;
+      font-weight: bold;
+    }
+    .form-login{
+      max-width: 500px;
+      width:99%;
+      margin:0 auto;
+      background: white;
+      box-shadow: 10px 10px 5px #888888;
+        -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+           -moz-animation: fadein 2s; /* Firefox < 16 */
+            -ms-animation: fadein 2s; /* Internet Explorer */
+             -o-animation: fadein 2s; /* Opera < 12.1 */
+                animation: fadein 2s;
+    }
+    input{
+      text-align: center;
+    }
+    input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      text-align: center;
+    }
+    input::-moz-placeholder { /* Firefox 19+ */
+      text-align: center;
+    }
+    input:-ms-input-placeholder { /* IE 10+ */
+      text-align: center;
+    }
+    input:-moz-placeholder { /* Firefox 18- */
+      text-align: center;
+    }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+  </style>
+</head>
+<body>
+  <form ng-submit="loginPost()" name="loginForm" autocomplete="off" novalidate>
+              <div class="form-login">
+                <h1 class="text-center">Bienvenido</h1>
+                <div class="text-center" ng-if="errors">
+                  <code><b>[[errors.non_field_errors]]</b></code>
+                </div>
+                <div class="form-group has-feedback" ng-class="{ 'has-success' : loginForm.username.$valid && (loginForm.username.$touched || loginForm.$submitted), 'has-error' : !loginForm.username.$valid && (loginForm.username.$touched || loginForm.$submitted) }" >
+                  <input type="text" name="username" ng-model="loginFormData.username" id="username" class="form-control input-lg chat-input" placeholder="Usuario" required>
+                  <span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : loginForm.username.$valid && (loginForm.username.$touched || loginForm.username.$dirty), 'glyphicon-remove': (loginForm.username.$invalid && (loginForm.username.$touched || loginForm.username.$dirty || loginForm.$submitted )) }" aria-hidden="true"></span>
+                  <div class="text-center">
+                    <div ng-messages="loginForm.username.$error" style="color:maroon" role="alert">
+                       <code ng-if="loginForm.username.$touched || loginForm.$submitted" ng-message="required">
+                        <strong>Ingrese su usuario</strong>
+                       </code>
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <div class="form-group has-feedback" ng-class="{ 'has-success' : loginForm.password.$valid && (loginForm.password.$touched || loginForm.$submitted), 'has-error' : !loginForm.password.$valid && (loginForm.password.$touched || loginForm.$submitted) }" >
+                <input type="text" style="display:none;">
+                  <input type="password" name="password" ng-model="loginFormData.password"  id="userPassword" class="form-control input-lg chat-input" placeholder="Contraseña" required>
+                  <span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : loginForm.password.$valid && (loginForm.password.$touched || loginForm.password.$dirty), 'glyphicon-remove': (loginForm.password.$invalid && (loginForm.password.$touched || loginForm.password.$dirty || loginForm.$submitted )) }" aria-hidden="true"></span> 
+                  <div class="text-center">
+                      <div ng-messages="loginForm.password.$error" style="color:maroon" role="alert">
+                         <code ng-if="loginForm.password.$touched || loginForm.$submitted" ng-message="required">
+                          <strong>Ingrese su contraseña</strong>
+                         </code>
+                      </div>
+                  </div>
+                </div>
+
+                
+                <div class="wrapper">
+                  <span class="group-btn">     
+                      <button type="submit" class="btn btn-info btn-lg btn-block">Ingresar <i class="fa fa-sign-in"></i></button>
+                  </span>
+                </div>
+              </div>
+          
+  </form>
+  <div class="infor-div">
+    <ul class="fa-ul" >
+      <li ng-repeat="message in context">
+        <i class="fa-li fa fa-times fa-2x"></i><span style="font-size: 1.65em">[[message.message]]</span>
+      </li>
+    </ul>    
+  </div>
+
+
+</body>

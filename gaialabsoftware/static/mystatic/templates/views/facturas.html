@@ -1,0 +1,78 @@
+
+
+<head>
+	<style type="text/css">
+		.text-nowrap {
+		    white-space: nowrap;
+		}
+		#tableAction{max-width: 200px;}
+	</style>
+</head>
+<panel-table 
+	search-url ='api/facturas/?search='
+	search-field="true" 
+	panel-title="Facturas"
+	advanced-search = "true"
+	search-date-field="true"
+	placeholder="Buscar"
+	results-list = "listaFacturas"
+>
+				<extra-element>
+				    <!-- Single button -->
+<!-- 					    <label>registrados en </label>
+					    <select ng-model="transclusion.dateRange" name="dateRange" ng-change="queryDate(transclusion.dateRange)">
+					    	<option value="last30">ultimos 30 dias</option>
+					    	<option value="months-6">ultimos 6 meses</option>
+					    	<option ng-repeat="year in yearRange| orderBy:'-'" value="[[year]]">[[year]]</option>
+					    </select> -->	
+
+				</extra-element>
+	<table class="table table-condensed table-striped table-responsive">
+	 		<div class="row" style="max-width:700px;margin:10px;">
+<!-- 	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+			  			<button title = "Add Selection to Shopping cart" type="button"  class="btn btn-success">
+			  				<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+			  			</button>
+	 			</div> -->
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Resetear busqueda" type="button" ng-click="refreshList()" class="btn btn-info">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
+						</button>
+
+	 			</div>
+
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Buscar entre Fechas" type="button" ng-click="filtrarEntreFechasModal('api/facturas/')" class="btn btn-info">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</button>
+	 			</div>
+						<div ng-show="resultados" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<!-- <button ng-click="searchByModal()" type="button" class="btn btn-info">Search by:</button> -->
+							<span><b>[[resultados]]</b> resultados encontrados</span>
+						</div>	
+	 		</div>
+		<thead>
+			<tr style="font-weight:bold;">
+				<td>Nro.</td>
+				<td>Cliente</td>
+				<td>Fecha</td>
+				<td>Monto</td>
+				<td>Ver</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="factura in listaFacturas">
+				<td><a href="" ng-click="detallesFactura(factura)">[[factura.id]]</a></td>
+				<td>[[factura.nombre|capfirstlettereachword]]</td>
+				<td>[[factura.created|date:'medium']]</td>
+				<td>[[factura.monto|currency:'Bs. ': 2]]</td>
+				<td><button title="Ver Factura" type="button" class="btn btn-primary" ng-click="verFactura(factura)"><i class="fa fa-file"></i></button></td>
+<!-- 				<td>[[factura.nacionalidad]]-[[factura.rif]]</td>
+				<td>[[factura.creador_nombre]]</td>
+				<td>[[factura.created|date:'medium']]</td>
+				<td>[[factura.monto|currency:'Bs. ': 2]]</td>
+				<td>[[factura.descuento|currency:'% ': 2]]</td> -->
+			</tr>
+		</tbody>
+	</table>
+</panel-table>

@@ -1,0 +1,95 @@
+{% load staticfiles %}
+{% load i18n %} 
+<!DOCTYPE html>
+<html lang="es" ng-app ="gaiaApp" ng-cloak>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
+<link href="{% static 'css/fonts.css' %}" rel="stylesheet">
+
+
+<style type="text/css">
+	body{
+		padding-top: 80px;
+        background: url(static/img/textures/nice_snow_@2X.png) repeat 0 0;
+	}
+    h1, h2, h3, h4, h5, h6{
+        font-family: 'Fjord One', serif!important;
+    }
+
+p, div, span {
+    font-family: "Source Sans Pro", "Crimson Text",serif;
+}
+
+        .waitForServer {
+
+            display: flex;
+            justify-content: center; /* align horizontal */
+            align-items: center; /* align vertical */
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            color:white;
+            background: rgba( 0, 0, 0, .2 ) ;
+        }
+
+  
+</style>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/dist/css/bootstrap.min.css' %}">
+ 
+  </head>
+<body>
+<div class="waitForServer" data-loading>
+    <i class="fa fa-spinner fa-pulse fa-fw fa-5x"></i>
+    <span class="sr-only">Cargando...</span>
+</div>
+
+    {% block index %}{% endblock index %}
+    {% block cargarcsv %}{% endblock cargarcsv %}
+    {% block mass_email %}{% endblock mass_email %}
+
+
+
+<script src="static/js/jsPDF/dist/jspdf.min.js"></script>
+<script src="static/js/autotable/jspdf.plugin.autotable.js"></script>
+<script async src="{% static 'js/angular_files/html2canvas.js' %}"></script>
+<script src="{% static 'js/angular_files/angular.min.js' %}"></script>
+
+
+<script src="{% static 'js/angular_app/controllers/app_controllers.js' %}"></script>
+<script src="{% static 'js/angular_app/controllers/modal_controllers.js' %}"></script>
+<script src="{% static 'js/angular_app/services/app_services.js' %}"></script>
+<script src="{% static 'js/angular_app/directives/app_directives.js' %}"></script>
+<script src="{% static 'js/angular_app/filters/app_filters.js' %}"></script>
+<script src="{% static 'js/angular_files/angular-messages.js' %}"></script>
+<script src="{% static 'js/angular_files/ui-bootstrap-tpls.js' %}"></script>
+<script src="{% static 'js/angular_files/angular-ui-router.min.js' %}"></script>
+<script src="{% static 'js/angular_files/angular-hotkeys.js' %}"></script>
+
+<!-- <script src="{% static 'css/hotkeys.css' %}"></script> -->
+
+
+<!--FILE UPDLOAD LIBRARY-->
+<script  src="{% static 'js/angular_files/upload.js' %}"></script>
+
+<!--THIS ONE IS NEEDED FOR IE9 or less file updload support-->
+<script  async src="{% static 'js/angular_files/shim-upload.js' %}"></script>
+
+<script src="{% static 'js/angular_app/app.js' %}"></script>
+ 
+</body>
+
+
+  
+</html>

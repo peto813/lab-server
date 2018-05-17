@@ -1,0 +1,1 @@
+default_app_config = 'patient_manager.apps.PatientManagerConfig'

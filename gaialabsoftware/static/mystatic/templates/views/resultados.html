@@ -1,0 +1,72 @@
+
+<panel-table 
+	search-url ='api/resultados/?impreso=True&search='
+	search-field="true" 
+	panel-title="Resultados"
+	advanced-search = "true"
+	search-date-field="true"
+	placeholder="Buscar"
+	results-list = "resultadosList"
+>
+				<extra-element>
+					    <label class="sr-only">Tipo Estudio:</label>
+					    <select ng-model="transclusion.filtro" name="filtro1">
+					    	<option value="">Tipo Estudio:</option>
+					    	<option value="citologia">Citologia</option>
+					    	<option value="biopsia">Biopsia</option>
+					    </select>
+
+					    <label class="sr-only">Tipo Cliente:</label>
+					    <select ng-model="transclusion.filtro2" name="filtro2">
+					    	<option value="">Tipo Cliente:</option>
+					    	<option value="postpago">Post Pago</option>
+					    	<option value="normal">Normal</option>
+					    </select>
+				</extra-element>
+	<table class="table table-condensed table-striped table-responsive">
+	 		<div class="row" style="max-width:700px;margin:10px;">
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Resetear busqueda" type="button" ng-click="refreshList()" class="btn btn-info">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
+						</button>
+
+	 			</div>
+
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Buscar entre Fechas" type="button" ng-click="filtrarEntreFechasModal('api/resultados/')" class="btn btn-info">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</button>
+	 			</div>
+						<div ng-show="resultados > 0" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<!-- <button ng-click="searchByModal()" type="button" class="btn btn-info">Search by:</button> -->
+							<span><b>[[resultados]]</b> resultados encontrados para <b>"[[resultsFor]]"</b></span>
+						</div>	
+	 		</div>
+		<thead>
+			<tr style="font-weight:bold;">
+				<td>Paciente</td>
+				<td>Estudio</td>
+				<td>ID</td>
+				<td>Creado</td>
+				<td>Adjunto</td>
+			</tr>
+			<tr class="warning" style="font-weight:bold;">
+				<td>[[resultadosList.length]] Resultados</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="resultado in resultadosList| orderBy:'-created' | filter:{tipo:transclusion.filtro, tipo_cliente:transclusion.filtro2}">
+				<td><a href="" ng-click="mostrarDetallesPaciente(resultado.paciente)">[[resultado.paciente.nombres|capfirstlettereachword]]</a></td>
+				<td>[[resultado.estudio_realizado|capitalize]]</td>
+				<td><a href="" title="Ver PDF" ng-click="detallesResultadoModal(resultado)">[[resultado.estudio]]</a></td>
+				<td>[[resultado.created|date:'medium']]</td>
+				<td ng-if="resultado.tipo=='biopsia'"><button type="button" title="Ver Adjunto" ng-click="verAdjunto(resultado)" class="btn btn-primary"><i class="fa fa-file"></i></button></td>
+				<td ng-if="resultado.tipo=='citologia'"><button type="button" title="Imprimir PDF" ng-click="verPDF(resultado)" class="btn btn-primary"><i class="fa fa-print"></i></button></td>
+			</tr>
+		</tbody>
+	</table>
+</panel-table>

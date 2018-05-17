@@ -1,0 +1,22 @@
+<head>
+	<style type="text/css">
+		.title-text{
+			text-align: center;
+			text-decoration: underline;
+			font-weight: bold;
+		}
+		.modal-body{
+			font-family: Courier,Courier New,Lucida Sans Typewriter,Lucida;
+			font-size: 16px;
+		}
+	</style>
+</head>
+<div class="modal-header">
+	<h3 class="text-center">Detalles del Resultado</h3>
+</div>
+<div class="modal-body">
+	<p ng-repeat="codigo in codigos" ng-class="{ 'title-text' : codigo.codigo.titulo }">[[codigo.codigo.descripcion]]</p>
+</div>
+<div class="modal-footer">
+	<button type="button" ng-click="cancel()" class="btn btn-danger btn-block">Cancelar</button>
+</div>

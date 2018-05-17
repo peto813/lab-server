@@ -1,0 +1,492 @@
+
+{% load staticfiles %}
+<head>
+	<style type="text/css">
+		body{
+			padding-top: 50px;
+			font-family: Courier;
+		}
+		#pie-chart, #pie{
+			margin: 0px auto;
+			border-radius: 10px;
+			width:50%;
+		}
+		.form-control{
+			margin-bottom: 15px;
+		}
+		.panel{
+			height:600px;
+		}
+/*		.chartHeader{
+			font-size: 22px;
+		}*/
+	</style>
+	<link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/dist/css/bootstrap.min.css' %}">
+	<script src="{% static 'js/angular_files/angular.min.js' %}"></script>
+	<script src="{% static 'js/angular_files/angular-chart/Chart.bundle.js' %}"></script>
+	<script src="{% static 'js/angular_files/angular-chart/angular-chart.min.js' %}"></script>
+	<script src="{% static 'js/angular_files/ui-bootstrap-tpls.js' %}"></script>
+	<title>GaiaSoft | Estadisticas</title>
+</head>
+	<body ng-app="gaiaApp" ng-controller="chartsController" ng-cloak>
+		<div class="container well">
+		<h1 class="text-center">Estadisticas</h1>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3>Datos</h3>
+					</div>
+					<div class="panel-body">
+						<select class="form-control" ng-model="estadisticas.modelo">
+							<option value="">Seleccione un modelo</option>
+							<option value="pacientes">Pacientes</option>
+							<option value="estudios">Estudios</option>
+<!-- 							<option value="facturas">Facturas</option> -->
+						</select>	
+						<select class="form-control" ng-model="estadisticas.paciente_criterio" ng-if="estadisticas.modelo=='pacientes'" ng-change="getPacienteData()">
+							<option value="">Filtrar:</option>
+							<option value="sexo">Por genero</option>
+							<option value="nacionalidad">Por nacionalidad</option>
+							<option value="tipo_paciente">Por tipo</option>
+						</select>
+						<div ng-show="estadisticas.modelo=='estudios'">
+							<form ng-submit="submitSearchBetweenDates()" name="entreFechasForm" novalidate>
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.desde.$valid && (entreFechasForm.desde.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.desde.$valid && (entreFechasForm.desde.$touched || entreFechasForm.$submitted) }" >
+										<input id="desde" uib-datepicker-popup="ddMMyyyy" type="text" name="desde" max-date-today ng-model="entreFechasFormData.desde" class="form-control" placeholder="Desde ( ddmmyyyy )" required>
+
+									</div>
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.hasta.$valid && (entreFechasForm.hasta.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.hasta.$valid && (entreFechasForm.hasta.$touched || entreFechasForm.$submitted) }" >
+										<input id="hasta" uib-datepicker-popup="ddMMyyyy" type="text" name="hasta" max-date-today ng-model="entreFechasFormData.hasta" class="form-control" placeholder="Hasta ( ddmmyyyy )" required>
+
+									</div>						
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.resolution.$valid && (entreFechasForm.resolution.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.resolution.$valid && (entreFechasForm.resolution.$touched || entreFechasForm.$submitted) }" >
+										<select class="form-control" name="resolution" ng-model="entreFechasFormData.resolution" id="resolution" required>
+											<option value="">Resolucion:</option>
+											<option value="diario">Diario</option>
+											<option value="mensual">Mensual</option>
+										</select>							
+									</div>
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.tipo_estudio.$valid && (entreFechasForm.tipo_estudio.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.tipo_estudio.$valid && (entreFechasForm.tipo_estudio.$touched || entreFechasForm.$submitted) }" >
+										<select class="form-control" name="tipo_estudio" ng-model="entreFechasFormData.tipo_estudio" id="tipo_estudio" >
+											<option value="">Tipo:</option>
+											<option value="citologia">Citologia</option>
+											<option value="biopsia">Biopsia</option>
+										</select>							
+									</div>						
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.comparador_edad.$valid && (entreFechasForm.comparador_edad.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.edad.$valid && (entreFechasForm.comparador_edad.$touched || entreFechasForm.$submitted) }" >
+										<select class="form-control" name="comparador_edad" ng-model="entreFechasFormData.comparador_edad" id="comparador_edad">
+											<option value="">Edad:</option>
+											<option value="eq">Igual a:</option>
+											<option value="gte">Mayor o igual a:</option>
+											<option value="lte">Menor o igual a:</option>
+											<option value="gt">Mayor a:</option>
+											<option value="lt">Menor a:</option>
+										</select>							
+									</div>
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.edad.$valid && (entreFechasForm.edad.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.edad.$valid && (entreFechasForm.edad.$touched || entreFechasForm.$submitted) }" >
+										<input min="1" placeholder="Edad" type="number" name="edad" class="form-control" ng-model="entreFechasFormData.edad" ng-required="entreFechasFormData.comparador_edad" ng-disabled="!entreFechasFormData.comparador_edad">				
+									</div>
+
+									<div class="form-group has-feedback" ng-class="{ 'has-success' : entreFechasForm.sexo.$valid && (entreFechasForm.sexo.$touched || entreFechasForm.$submitted), 'has-error' : !entreFechasForm.edad.$valid && (entreFechasForm.sexo.$touched || entreFechasForm.$submitted) }" >
+										<select class="form-control" name="sexo" ng-model="entreFechasFormData.sexo" id="sexo">
+											<option value="">Sexo:</option>
+											<option value="M">Masculino:</option>
+											<option value="F">Femenino:</option>
+										</select>							
+									</div>
+
+								<input typeahead-min-length="0" ng-model="entreFechasFormData.examen" uib-typeahead="resultado.nombre for resultado in resultados | tipoEstudio: entreFechasFormData.tipo_estudio | filter:$viewValue | limitTo:8" type="text" id="examen" placeholder="Examen"  name="examen" class="form-control">
+
+								<input type="submit" value="Buscar" ng-disabled="!entreFechasForm.$valid">
+							</form>
+						</div>					
+					</div>
+
+				
+
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4">
+							<h3 class="chartHeader">Grafica</h3>
+						</div>
+						<div class="col-xs-12 col-sm-8">
+								<button ng-click="printChart()" type="button" class="btn btn-primary pull-right">
+									<i title="imprimir" class="fa fa-print fa-2x"></i>
+								</button>				
+						</div>
+
+					</div>
+
+
+<!-- 						<div class="row" ng-if="estadisticas.modelo=='estudios'">
+							<div class="col-xs-12 col-sm-2">
+								<select name="tipo_estudio" ng-model="entreFechasFormData.tipo_estudio" id="tipo_estudio" ng-change="filtroTipo()">
+									<option value="">Tipo:</option>
+									<option value="citologia">Citologia</option>
+									<option value="biopsia">Biopsia</option>
+								</select>							
+							</div>
+							<div class="col-xs-12 col-sm-2">
+
+								<select class="form-control" name="comparador_edad" ng-model="entreFechasFormData.comparador_edad" id="comparador_edad">
+									<option value="">Comp:</option>
+									<option value="==">=</option>
+									<option value=">=">>=</option>
+									<option value="<="><=</option>
+									<option value=">">></option>
+									<option value="<"><</option>
+								</select>							
+
+							</div>
+							<div class="col-xs-12 col-sm-2">
+								<input min="1" placeholder="Edad" type="number" name="edad" class="form-control" ng-model="entreFechasFormData.edad" ng-required="entreFechasFormData.comparador_edad" ng-disabled="!entreFechasFormData.comparador_edad">
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<select name="sexo" ng-model="entreFechasFormData.sexo" id="sexo" ng-change="submitSearchBetweenDates()">
+									<option value="">Sexo:</option>
+									<option value="M">Masculino:</option>
+									<option value="F">Femenino:</option>
+								</select>							
+							</div>
+						</div> -->
+					</div>
+					<div class="panel-body">
+						<!--PACIENTES-->
+						<div id="pie-chart" ng-if="estadisticas.modelo=='pacientes'">
+							<canvas id="canvas" class="chart chart-pie"
+							  chart-data="data" chart-labels="labels" chart-options="options">
+							</canvas>
+						</div>
+							<canvas ng-if="estadisticas.modelo=='estudios'" id="canvas" class="chart chart-bar" chart-data="estudioData" chart-labels="estudioLabels" chart-series="estudioSeries"></canvas><!--ng-if="entreFechasForm.$submitted" -->	
+		
+					</div>
+				</div>
+	
+			</div>
+		</div>
+			
+
+
+
+			
+
+<!-- 			<select class="form-control" ng-model="tipo" ng-if="modelo=='estudios'">
+				<option value="">Tipo de estudio</option>
+				<option value="citologia">Citologias</option>
+				<option value="biposia">Biopsias</option>
+			</select> -->
+
+
+		</div>
+		<script type="text/javascript">
+			var monthNames = [ "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+			        "Julio", "Augusto", "Septiembre", "Octubre", "Noviembre", "Diciembre" ];
+
+			// function diff(from, to) {
+			//     var arr = [];
+			//     //var datFrom = new Date('1 ' + from);
+			//     //var datTo = new Date('1 ' + to);
+			//     var datFrom = from;
+			//     var datTo = to;		    
+			//     var fromYear =  datFrom.getFullYear();
+			//     var toYear =  datTo.getFullYear();
+			//     var diffYear = (12 * (toYear - fromYear)) + datTo.getMonth();
+
+			//     for (var i = datFrom.getMonth(); i <= diffYear; i++) {
+			//         arr.push(monthNames[i%12] + " " + Math.floor(fromYear+(i/12)));
+			//     }        
+
+			//     return arr;
+			// }
+
+
+
+			var gaiaChartApp = angular.module("gaiaApp",
+			 [ 
+			 //'ui.router', 
+			'ui.bootstrap', 
+			//'ngMessages', 
+			//'appControllers',
+			//'cfp.hotkeys',
+			//'appServices', 
+			//'appDirectives', 
+			//'gaiaAppFilters',
+			//'ezfb', 
+			//'ngSanitize', 
+			'chart.js',
+			//'ngFileUpload'
+			]);//, 'hmShipControllers', 'hmShipServices'
+
+			gaiaChartApp.controller('chartsController', ['$scope','$http','uibDateParser','$filter',function( $scope, $http, uibDateParser, $filter ){
+				//PACIENTES
+				//$scope.format = 'yyyy/MM/dd';
+  				//$scope.format = 'ddMMyyyy';
+  				$scope.estadisticas = {};
+  				$scope.entreFechasFormData = {};
+
+  				$scope.printChart = function(){
+					var canvas = document.getElementById("canvas");
+					if (canvas){
+						//var img    = canvas.toDataURL("image/png");
+						//document.write('<img src="'+img+'"/>');	
+						window.location = canvas.toDataURL("image/png");					
+					}
+
+  				}
+
+
+				var url = '../api/precios/'
+				$http.get(url).success(function(response){
+					$scope.resultados = response;
+				})
+
+	    		function getTableObj(fromDate, toDate, dataArray){
+					var data = [];
+					var labels = [];
+					for (var d = fromDate; d <= toDate; d.setDate(d.getDate() + 1)) {
+					    count_at_date = 0;
+					    for ( var i in dataArray){
+					    	if ( d.toDateString() === (new Date (dataArray[i].created)).toDateString()  ){
+					    		count_at_date= count_at_date+1;
+					    	}
+					    }
+					    labels.push($filter('date')(d, 'dd/MM/yy'));
+					    data.push(count_at_date);
+
+					}
+
+					var returnObj = {
+						data :data,
+						labels :labels
+					}
+					return returnObj;
+				}
+
+
+				// $scope.getExams= function(){
+				// 	var url = '../api/precios/'
+				// 	$http.get(url).success(function(response){
+				// 		$scope.resultados = $filter('tipoEstudio')(response, $scope.entreFechasFormData.tipo_estudio);
+				// 		console.log(JSON.stringify($scope.resultados))
+				// 	})
+				// }
+
+				$scope.submitSearchBetweenDates = function(){
+  					$scope.data = [];
+  					$scope.labels =[];
+  					$scope.series = [];
+					var timestamp_gte = $scope.entreFechasFormData.desde;
+					var timestamp_lte = $scope.entreFechasFormData.hasta;
+					$scope.entreFechasFormData.timestamp_gte = timestamp_gte;
+					$scope.entreFechasFormData.timestamp_lte = timestamp_lte;
+					var oneDay = 24*60*60*1000; 
+					var diffDays = Math.round(Math.abs((timestamp_gte.getTime() - timestamp_lte.getTime())/(oneDay)))
+					if(timestamp_lte<timestamp_gte){
+						alert('"hasta" no puede ser inferior a "desde"');
+						return false;
+					}else if(diffDays<=31 && $scope.entreFechasFormData.resolution=='mensual'){
+						alert('Selecciono una resolucion mensual y esta buscando un rango inferior a 31 dias');
+						return false;
+					}
+
+
+					var url = '../api/estudios_estadisticas/' + '?timestamp_gte=' + timestamp_gte.toISOString() + '&timestamp_lte='+ timestamp_lte.toISOString();
+
+					$http.get( url ).success(function(response){
+						$scope.tabledata = response;
+
+				    	var filteredArray = $filter('filter')(response, 
+				    		{
+				    			tipo:$scope.entreFechasFormData.tipo_estudio,
+				    			sexo:$scope.entreFechasFormData.sexo,
+				    			examen:$scope.entreFechasFormData.examen
+				    		}
+				    	)
+				    	var filteredArray = $filter('comparator')(filteredArray, 'edad', $scope.entreFechasFormData.edad, $scope.entreFechasFormData.comparador_edad)
+
+				    	if($scope.entreFechasFormData.resolution=='mensual'){
+						    var fromYear =  timestamp_gte.getFullYear();
+						    var toYear =  timestamp_lte.getFullYear();
+						    var diffYear = (12 * (toYear - fromYear)) + timestamp_lte.getMonth();
+						    var arr = [];
+						    var labels = [];
+						    var data = [];
+						    for (var i = timestamp_gte.getMonth(); i <= diffYear; i++) {
+						    	count_at_date = 0;
+						    	//console.log(i%12)
+						    	for (var j in response){
+						    		var record_date = new Date(response[j]['created']);
+									if (record_date.getMonth() == (i%12) && record_date.getFullYear() == Math.floor(fromYear+(i/12)))
+									{
+									    count_at_date = count_at_date+1;
+									}						    		
+						    	}
+						    	data.push(count_at_date);
+						    	labels.push(monthNames[i%12] + " " + Math.floor(fromYear+(i/12)));
+						    } 
+
+							$scope.estudioSeries = ['Estudios'];
+							$scope.estudioLabels =  labels;
+							$scope.estudioData = data;
+							$scope.entreFechasFormData = {};
+
+				    	}else if($scope.entreFechasFormData.resolution=='diario'){
+							var arrayData = getTableObj(timestamp_gte, timestamp_lte, filteredArray)
+							$scope.estudioSeries = ['Estudios'];
+							$scope.estudioLabels =  arrayData.labels;
+							$scope.estudioData = arrayData.data;
+							$scope.entreFechasFormData = {};
+				    	}
+
+					})
+				}
+
+
+  				$scope.getPacienteData = function(){
+
+  					$scope.data = [];
+  					$scope.labels =[];
+  					$scope.series = [];
+					$scope.estudioLabels =  [];
+					$scope.estudioData = [];
+
+  					var criterio = $scope.estadisticas.paciente_criterio;
+					switch(String(criterio)) {
+					    case 'sexo':
+					        var url = '../api/sexo_paciente/';
+					        $scope.labels = ["Femenino", "Masculino"];
+					        $scope.options = {
+					        	legend: {
+					        		display: true
+					        	}
+					        };
+					        break;
+					    case 'nacionalidad':
+					        var url = '../api/nacionalidad_paciente/';
+					        $scope.labels = ["Venezolano", "Extranjero"];
+					        $scope.options = {
+					        	legend: {
+					        		display: true
+					        	}
+					        };
+					        break;
+					    case 'tipo_paciente':
+					        var url = '../api/tipo_paciente/';
+					        $scope.labels = ["Normal", "Post-Pago"];
+					        $scope.options = {
+					        	legend: {
+					        		display: true
+					        	}
+					        };
+					    //     break;
+
+					} 
+  					$http.get(url).success(function(data){
+						switch($scope.estadisticas.paciente_criterio) {
+						    case 'sexo':
+								$scope.data = [data.femenino, data.masculino];
+						        break;
+						    case 'nacionalidad':
+								$scope.data = [data.venezolano, data.extranjero];
+						        break;
+						    case 'tipo_paciente':
+								$scope.data = [data.normal, data.post_pago];
+						        break;						        
+						    default:
+						        $scope.data = [];
+						} 
+  						
+  					})
+  				}
+			}])
+
+			gaiaChartApp.directive('maxDateToday', function() {
+
+			    var directive = {};
+			    directive.require =  "ngModel";
+			    //directive.restrict = '';
+			    // directive.scope = {
+			    //   maxDate: '@'
+			    // };
+			    directive.scope = false;
+			    directive.link = function(scope, element, attributes, ngModel) {
+			             
+			        ngModel.$validators.maxDateToday = function(modelValue) {
+			          return modelValue <= new Date();
+
+			        };
+
+			    }
+			    return directive;
+
+			}); 
+
+
+			gaiaChartApp.filter('tipoEstudio', function() {
+			    return function(input, tipoEstudio) {	
+			    	if( input && tipoEstudio ){
+			    		var return_list = [];
+			    		for (var i in input){
+			    			if (input[i].tipo == tipoEstudio){
+			    				return_list.push(input[i]);
+			    			}
+			    		}
+			    		return return_list;	
+			    	}
+			    	return input;
+			    }		
+			});   
+			gaiaChartApp.filter('comparator', function() {
+			    return function(input, prop, value, comp) {
+					if (input && prop && value && comp){
+					switch(comp) {
+					    case 'lt':
+					        var func_app = function(a, b){
+					        	return a<b;
+					        }
+					        break;
+					    case 'lte':
+					        var func_app = function(a, b){
+					        	return a<=b;
+					        }
+					        break;
+					    case 'eq':
+					        var func_app = function(a, b){
+					        	return a==b;
+					        }
+					        break;
+					    case 'gt':
+					        var func_app = function(a, b){
+					        	return a>b;
+					        }
+					        break;
+					    case 'gte':
+					        var func_app = function(a, b){
+					        	return a>=b;
+					        }
+					        break;
+
+					} 
+			    	var response_list = [];
+			            for (var i = 0 in input) {
+
+			            	if(func_app(input[i][prop], value)){
+			            		response_list.push(input[i])
+			            	}  
+			            }
+			            return response_list;   		
+			    	}else{
+			    		return input;
+			    	}
+
+			    };
+			})
+		</script>
+	</body>
+

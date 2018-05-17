@@ -1,0 +1,33 @@
+<head>
+	<style type="text/css">
+		.bold{
+			font-weight: bold;
+		}
+	</style>
+</head>
+<div class="modal-header">
+	<h3 class="text-center">Nota de Estudios</h3>
+</div>
+<div class="modal-body">
+	<table class="table table-responsive table-condensed table-striped">
+		<thead>
+			<tr class="bold">
+				<td>ID</td>
+				<td>Nro secuencia</td>
+				<td>Estudio</td>
+				<td>Tipo</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="estudio in estudios">
+				<td>[[estudio.id]]</td>
+				<td>[[estudio.nro_sec_mes]]</td>
+				<td>[[estudio.estudio_realizado]]</td>
+				<td>[[estudio.tipo]]</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+	<button type="button" ng-click="cancel()" class="btn btn-danger btn-block">Cerrar</button>
+</div>

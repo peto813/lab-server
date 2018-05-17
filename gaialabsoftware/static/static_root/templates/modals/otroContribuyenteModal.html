@@ -1,0 +1,62 @@
+<form ng-submit="ImprirFactura()" name="imprirFacturaForm" id="ImprirFacturaForm" novalidate>
+	<div class="modal-header text-center">
+		<h2>Datos de la Factura</h2>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4" ng-show="agente_retencion=='SI'">Ag. Retencion<i class="fa fa-check"></i></div>
+			<div class="col-xs-12 col-sm-4" ng-show="contribuyente_IVA=='SI'">Cont. Especial<i class="fa fa-check"></i></div> 
+			<div class="col-xs-12 col-sm-4" ng-show="tasa>0">Tasa: [[tasa]]</div>
+		</div>
+
+		<div style="margin-top: 20px;" class="form-group has-feedback" ng-class="{ 'has-success' : imprirFacturaForm.nacionalidad.$valid && (imprirFacturaForm.nacionalidad.$touched || imprirFacturaForm.$submitted), 'has-error' : !imprirFacturaForm.nacionalidad.$valid && (imprirFacturaForm.nacionalidad.$touched || imprirFacturaForm.$submitted) }" >
+			<label for="nacionalidad" class="sr-only">Nacionalidad:</label>
+			<select class="form-control" name ="nacionalidad" ng-model="facturaForm.nacionalidad" required>
+					<option value="V">V</option>
+					<option value="J">J</option>
+					<option value="E">E</option>
+					<option value="G">G</option>
+			</select>
+		</div>
+
+		<div style="margin-top: 20px;" class="form-group has-feedback" ng-class="{ 'has-success' : imprirFacturaForm.rif.$valid && (imprirFacturaForm.rif.$touched || imprirFacturaForm.$submitted), 'has-error' : !imprirFacturaForm.rif.$valid && (imprirFacturaForm.rif.$touched || imprirFacturaForm.$submitted) }">
+				<label for="rif" class="sr-only">Rif:</label>
+				<input type="text" name="rif" id="rif" ng-blur="buscarContribuyenteRed()"  placeholder="RIF" ng-model="facturaForm.rif" class="form-control" required>
+				<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : imprirFacturaForm.rif.$valid && (imprirFacturaForm.rif.$touched || imprirFacturaForm.rif.$dirty), 'glyphicon-remove': (imprirFacturaForm.rif.$invalid && (imprirFacturaForm.rif.$touched || imprirFacturaForm.rif.$dirty || imprirFacturaForm.$submitted )) }" aria-hidden="true"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : imprirFacturaForm.razonSocial.$valid && (imprirFacturaForm.razonSocial.$touched || imprirFacturaForm.$submitted), 'has-error' : !imprirFacturaForm.razonSocial.$valid && (imprirFacturaForm.razonSocial.$touched || imprirFacturaForm.$submitted) }">
+				<label for="razonSocial" class="sr-only" >Razon Social:</label>
+				<input type="text" name="razonSocial" id="razonSocial" placeholder="Razon Social" ng-model="facturaForm.razonSocial" class="form-control" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : imprirFacturaForm.razonSocial.$valid && (imprirFacturaForm.razonSocial.$touched || imprirFacturaForm.razonSocial.$dirty), 'glyphicon-remove': (imprirFacturaForm.razonSocial.$invalid && (imprirFacturaForm.razonSocial.$touched || imprirFacturaForm.razonSocial.$dirty || imprirFacturaForm.$submitted )) }" aria-hidden="true">	
+			</span>
+		</div>
+
+		<div style="margin-top: 20px;" class="form-group has-feedback" ng-class="{ 'has-success' : imprirFacturaForm.telefono.$valid && (imprirFacturaForm.telefono.$touched || imprirFacturaForm.$submitted), 'has-error' : !imprirFacturaForm.telefono.$valid && (imprirFacturaForm.telefono.$touched || imprirFacturaForm.$submitted) }">
+			<label for="monto" class="sr-only">Telefono:</label>
+			<input type="text" name="telefono" id="telefono" placeholder="Telefono" ng-model="facturaForm.telefono" class="form-control" ng-pattern="/^[0-9]*$/">
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : imprirFacturaForm.telefono.$valid && (imprirFacturaForm.telefono.$touched || imprirFacturaForm.telefono.$dirty), 'glyphicon-remove': (imprirFacturaForm.telefono.$invalid && (imprirFacturaForm.telefono.$touched || imprirFacturaForm.telefono.$dirty || imprirFacturaForm.$submitted )) }" aria-hidden="true">	
+			</span>
+		</div>
+
+		<div style="margin-top: 20px;" class="form-group has-feedback" ng-class="{ 'has-success' : imprirFacturaForm.direccion.$valid && (imprirFacturaForm.direccion.$touched || imprirFacturaForm.$submitted), 'has-error' : !imprirFacturaForm.direccion.$valid && (imprirFacturaForm.direccion.$touched || imprirFacturaForm.$submitted) }">
+			<label for="monto" class="sr-only">Direccion:</label>
+			<input type="text" name="direccion" id="direccion" placeholder="Direccion" ng-model="facturaForm.direccion" class="form-control" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : imprirFacturaForm.direccion.$valid && (imprirFacturaForm.direccion.$touched || imprirFacturaForm.direccion.$dirty), 'glyphicon-remove': (imprirFacturaForm.direccion.$invalid && (imprirFacturaForm.direccion.$touched || imprirFacturaForm.direccion.$dirty || imprirFacturaForm.$submitted )) }" aria-hidden="true">	
+			</span>
+		</div>
+
+		<div class="form-group">
+			<label for="monto" class="sr-only">Monto:</label>
+			<div class="input-group">
+				<span class="input-group-addon">Bs. </span>
+				<input type="text" name="monto" id="monto" placeholder="Monto" ng-model="facturaForm.monto" class="form-control" required readonly>
+			</div>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : imprirFacturaForm.monto.$valid && (imprirFacturaForm.monto.$touched || imprirFacturaForm.monto.$dirty), 'glyphicon-remove': (imprirFacturaForm.monto.$invalid && (imprirFacturaForm.monto.$touched || imprirFacturaForm.monto.$dirty || imprirFacturaForm.$submitted )) }" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" ng-disabled="!imprirFacturaForm.$valid" class="btn btn-success btn-block">Imprimir</button>
+		<button type="button" ng-click="cancel()" class="btn btn-danger btn-block">Cerrar</button>
+	</div>
+</form>

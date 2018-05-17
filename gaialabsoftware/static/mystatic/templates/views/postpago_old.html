@@ -1,0 +1,64 @@
+<head>
+	<style type="text/css">
+	thead{
+		font-weight: bold;
+	}
+	.input-group{max-width: 300px;}
+	</style>
+</head>
+<h3>Clientes Post Pago</h3>
+<form id="agregarEstudio" name="agregarEstudio" novalidate>
+	<div class="form-group">
+		<label class="sr-only" for="cliente">Cliente:</label>
+		<div class="input-group">
+			<select id="cliente" name="cliente" class="form-control" ng-model="cliente" required>
+				<option value="">Seleccione Cliente</option>
+				<option ng-repeat="cliente in clientesPostPago" value="[[cliente.id]]">[[cliente.nombre]]</option>
+			</select>
+<!-- 			<div class="input-group-btn">
+				<button ng-click="addCliente()" type="button" class="btn btn-primary">
+					<i class="fa fa-plus"></i>
+				</button>
+				
+			</div> -->
+		</div>
+
+	</div>
+
+	<div class="form-group">
+		<label>Acumulado:</label>
+		<span id="acumulado">total</span>		
+	</div>
+
+	<!-- <input type="submit" value="agregar" class="btn btn-success"> -->
+</form>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		Pacientes
+	</div>
+	<div class="panel-body">
+		<table class="table table-responsive table-condensed table-striped">
+			<thead>
+<!-- 				<tr>
+					<td>
+						<button ng-click="agregarPaciente()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</td>
+				</tr> -->
+				<tr>
+					<td>Paciente</td>
+					<td>Rif</td>
+					<td>Estudio</td>
+					<td>Precio</td>
+				</tr>
+
+			</thead>
+<!-- 			<tbody>
+				<tr>
+					<td></td>
+				</tr>
+			</tbody> -->
+		</table>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<head>
+	<style type="text/css">
+		.nav-tabs li{
+/*			background-color: gold;*/
+			font-weight: bold;
+			font-size: 18px;
+		    border-top-left-radius:8px;
+		    border-top-right-radius:8px;
+		}
+/*.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+    color: #555;
+    cursor: default;
+    background-color: orange;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+
+}*/
+	</style>
+</head>
+<ul class="nav nav-tabs">
+	<li ng-class="{ 'active' : currentUrl == '/[[tab.url]]' }" ng-repeat="tab in tabList"><a ng-href="#/[[tab.url]]">[[tab.name]]</a></li>
+</ul>

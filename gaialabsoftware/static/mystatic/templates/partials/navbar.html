@@ -1,0 +1,76 @@
+    <nav ng-controller="navBarController" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed"  ng-click="navCollapsed = !navCollapsed;navbar_manipulated=true" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#/">Administrador de Pacientes</a> -->
+      <a href="[[ brandUrl ]]" class="navbar-brand"> 
+        <img id="inicioLogo" ng-src="static/img/logos/logo.jpg" style="width:100px;max-height:80px;float:left;margin-top:-30px;padding-top:-30px;" class="img-responsive" alt="No hay logo">
+        <!-- <logo-condominioaldia scale="0.015"></logo-condominioaldia> -->
+      </a><!--navbar-brand-->
+        </div>
+
+
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" uib-collapse="navCollapsed" element-on-resize ="toggleCollapse()" ng-click = "navbarToggler()" >
+
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="admin" class="text-center" ng-if ="!userAuthenticated">Administradores</a></li>
+            <li><a href="#/pacientes" class="text-center" ng-if ="!userAuthenticated">Soporte</a></li>
+            <li><a href="[[ brandUrl ]]" class="text-center" ng-if ="userAuthenticated">Inicio</a></li>
+            <li><a href="#/postpago" class="text-center" ng-if ="userAuthenticated">Clientes Post-Pago</a></li>
+           <li><a href="#/pacientes" class="text-center" ng-if ="userAuthenticated">Pacientes</a></li>
+            <li><a href="#/estudios" class="text-center" ng-if ="userAuthenticated">Estudios</a></li>
+            <li><a href="#/facturas" class="text-center" ng-if ="userAuthenticated">Facturas</a></li>
+             <li><a href="#/resultados" class="text-center" ng-if ="userAuthenticated">Resultados</a></li>
+            <li><a href="#/reportes" class="text-center" ng-if ="userAuthenticated">Reportes</a></li>
+            <li><a href="#/precios" class="text-center" ng-if ="userAuthenticated">Precios</a></li>
+            <li><a href="#/codigos" class="text-center" ng-if ="userAuthenticated">Codigos</a></li>
+            <li><a href="" ng-click="salir()" class="text-center" ng-if ="userAuthenticated">Salir</a></li>
+<!--             <li><a href="#/join" ng-show ="!userAuthenticated">JOIN</a></li>
+
+            <li><a href="#/help" ng-show ="!userAuthenticated">Help</a></li> -->
+
+          </ul>
+
+          <ul class="nav navbar-nav">
+<!--             <li><a href="#/howitworks" ng-show="!userAuthenticated">HOW IT WORKS</a></li>
+            <li><a href="#/about" ng-if="!userAuthenticated">ABOUT</a></li>
+            <li class="collapsedoption"><a href="#">HELP</a></li>
+            <li class="collapsedoption"><a href="#">COMPANY</a></li>
+            <li class="collapsedoption"><a href="#">CAREERS</a></li>
+            <li class="collapsedoption"><a href="#">PRESS</a></li>
+            <li class="collapsedoption"><a href="#">BLOG</a></li>
+            <li class="collapsedoption"><a href="#">CATEGORIES</a></li> -->
+          </ul>
+
+
+    </div><!-- /.navbar-collapse -->
+
+<!--         <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#/">Salir</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Buscar...">
+          </form>
+        </div> -->
+
+
+
+      </div>
+    </nav>
+
+
+
+

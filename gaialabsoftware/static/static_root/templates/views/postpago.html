@@ -1,0 +1,90 @@
+<head>
+	<style type="text/css">
+	thead{
+		font-weight: bold;
+	}
+	.input-group{max-width: 300px;}
+	</style>
+</head>
+<h3>Clientes Post Pago</h3>
+<form id="agregarEstudio" name="agregarEstudio" novalidate>
+	<div class="form-group">
+		<label class="sr-only" for="cliente">Cliente:</label>
+		<div class="input-group">
+			<select id="cliente" name="cliente" class="form-control" ng-model="cliente" ng-change="postPagoSelected()" required>
+				<option value="">Seleccione Cliente</option>
+				<option ng-repeat="cliente in clientesPostPago" value="[[cliente.id]]">[[cliente.nombre]]</option>
+			</select>
+<!-- 			<div class="input-group-btn">
+				<button ng-click="addCliente()" type="button" class="btn btn-primary">
+					<i class="fa fa-plus"></i>
+				</button>
+				
+			</div> -->
+		</div>
+
+	</div>
+
+<!-- 	<div class="form-group">
+		<label>Acumulado:</label>
+		<span id="acumulado">total</span>		
+	</div> -->
+
+	<!-- <input type="submit" value="agregar" class="btn btn-success"> -->
+</form>
+
+
+<!-- <head>
+	<style type="text/css">
+		.text-nowrap {
+		    white-space: nowrap;
+		}
+		#tableAction{max-width: 200px;}
+	</style>
+</head> -->
+<panel-table 
+
+	table-search = "searchParam" 
+	search-field="true" 
+	panel-title="Pacientes"
+	advanced-search = "true"
+	adv-search-fn = "searchBackend()"
+	search-date-field="true"
+	placeholder="Buscar"
+	ng-if="cliente"
+>
+				<extra-element>
+				    <!-- Single button -->
+<!-- 					    <label>registrados en </label>
+					    <select ng-model="transclusion.dateRange" name="dateRange" ng-change="queryDate(transclusion.dateRange)">
+					    	<option value="last30">ultimos 30 dias</option>
+					    	<option value="months-6">ultimos 6 meses</option>
+					    	<option ng-repeat="year in yearRange| orderBy:'-'" value="[[year]]">[[year]]</option>
+					    </select>	 -->
+
+				</extra-element>
+		<table class="table table-responsive table-condensed table-striped">
+			<thead>
+<!-- 				<tr>
+					<td>
+						<button ng-click="agregarPaciente()">
+							<i class="fa fa-plus"></i>
+						</button>
+					</td>
+				</tr> -->
+				<tr>
+					<td>Paciente</td>
+					<td>Estudio</td>
+					<td>Dep./Filial</td>
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr ng-repeat="paciente in pacientes">
+					<td><a href="" ng-click="datosPersonales(paciente)">[[paciente.nombres|capfirstlettereachword]] [[paciente.apellidos|capfirstlettereachword]]</a></td>
+					<td><a href="" ng-click="getEstudios(paciente)">Estudios</a></td>
+					<td>[[paciente.detalle]]</td>
+				</tr>
+			</tbody>
+		</table>
+</panel-table>

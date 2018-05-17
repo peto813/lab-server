@@ -1,0 +1,69 @@
+<head>
+	<style type="text/css">
+		#nacionalidad{
+			max-width: 60px;
+			min-width: 50px;
+		}
+		.rifDiv{
+			padding-left: 0px;
+		}
+	</style>
+</head>
+<form ng-submit="crearClienteEspecial()" name="clienteEspecialForm" novalidate>
+	<div class="modal-title text-center">
+		<h3>Registro Cliente</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-3 col-sm-2 col-md-2">
+		  		<div class="form-group">
+		      		<label for="nacionalidad" class="sr-only" >Nacionalidad</label>
+		          	<select id = "nacionalidad" name = "nacionalidad" ng-model="clienteEspecialData.nacionalidad" class="form-control" required>
+		          		<option option="J">J</option>
+		          		<option option="V">V</option>
+		          		<option option="E">E</option>		          			
+		          	</select>
+		        </div>				
+			</div>
+			<div class="col-xs-9 col-sm-10 col-md-10 rifDiv">
+				<div class="form-group has-feedback" ng-class="{ 'has-success' : clienteEspecialForm.rif.$valid && (clienteEspecialForm.rif.$touched || clienteEspecialForm.$submitted), 'has-error' : !clienteEspecialForm.rif.$valid && (clienteEspecialForm.rif.$touched || clienteEspecialForm.$submitted) }">
+					<label for="rif" class="sr-only">RIF</label>		
+					<input id="rif" ng-pattern="/^[0-9]*$/" type="text" ng-model= "clienteEspecialData.rif" name="rif" class="form-control" placeholder="RIF" required>
+					<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : clienteEspecialForm.rif.$valid && (clienteEspecialForm.rif.$touched || clienteEspecialForm.rif.$dirty), 'glyphicon-remove': (clienteEspecialForm.rif.$invalid && (clienteEspecialForm.rif.$touched || clienteEspecialForm.rif.$dirty || clienteEspecialForm.$submitted )) }" aria-hidden="true"></span>
+				</div>					
+			</div>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : clienteEspecialForm.razonSocial.$valid && (clienteEspecialForm.razonSocial.$touched || clienteEspecialForm.$submitted), 'has-error' : !clienteEspecialForm.razonSocial.$valid && (clienteEspecialForm.razonSocial.$touched || clienteEspecialForm.$submitted) }" >
+			<label for="razonSocial" class="sr-only">Razon Social</label>		
+			<input id="razonSocial" type="text" ng-model= "clienteEspecialData.nombre" name="razonSocial" class="form-control" placeholder="Razon Social" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : clienteEspecialForm.razonSocial.$valid && (clienteEspecialForm.razonSocial.$touched || clienteEspecialForm.razonSocial.$dirty), 'glyphicon-remove': (clienteEspecialForm.razonSocial.$invalid && (clienteEspecialForm.razonSocial.$touched || clienteEspecialForm.razonSocial.$dirty || clienteEspecialForm.$submitted )) }" aria-hidden="true"></span>
+		</div>
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : clienteEspecialForm.email.$valid && (clienteEspecialForm.email.$touched || clienteEspecialForm.$submitted), 'has-error' : !clienteEspecialForm.email.$valid && (clienteEspecialForm.email.$touched || clienteEspecialForm.$submitted) }">
+			<label for="email" class="sr-only">Email</label>		
+			<input id="email" type="email" ng-model= "clienteEspecialData.email" name="email" class="form-control" placeholder="Correo electronico" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : clienteEspecialForm.email.$valid && (clienteEspecialForm.email.$touched || clienteEspecialForm.email.$dirty), 'glyphicon-remove': (clienteEspecialForm.email.$invalid && (clienteEspecialForm.email.$touched || clienteEspecialForm.email.$dirty || clienteEspecialForm.$submitted )) }" aria-hidden="true"></span>
+		</div>					
+
+
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : clienteEspecialForm.telefono.$valid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.$submitted), 'has-error' : !clienteEspecialForm.telefono.$valid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.$submitted) }">
+			<label for="telefono" class="sr-only">Telefono</label>		
+			<input id="telefono" ng-pattern="/^[0-9]*$/" type="text" ng-model= "clienteEspecialData.telefono" name="telefono" class="form-control" placeholder="Telefono" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : clienteEspecialForm.telefono.$valid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.telefono.$dirty), 'glyphicon-remove': (clienteEspecialForm.telefono.$invalid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.telefono.$dirty || clienteEspecialForm.$submitted )) }" aria-hidden="true"></span>
+		</div>
+
+		<div class="form-group has-feedback" ng-class="{ 'has-success' : clienteEspecialForm.telefono.$valid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.$submitted), 'has-error' : !clienteEspecialForm.telefono.$valid && (clienteEspecialForm.telefono.$touched || clienteEspecialForm.$submitted) }">
+			<label for="direccion" class="sr-only">Direccion</label>		
+			<input id="direccion" type="text" ng-model= "clienteEspecialData.direccion" name="direccion" class="form-control" placeholder="Direccion" required>
+			<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : clienteEspecialForm.direccion.$valid && (clienteEspecialForm.direccion.$touched || clienteEspecialForm.direccion.$dirty), 'glyphicon-remove': (clienteEspecialForm.direccion.$invalid && (clienteEspecialForm.direccion.$touched || clienteEspecialForm.direccion.$dirty || clienteEspecialForm.$submitted )) }" aria-hidden="true"></span>
+		</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="submit" ng-disabled="!clienteEspecialForm.$valid" class="btn btn-success btn-block">Aceptar</button>
+		<button type="button" ng-click="cancel()" class="btn btn-danger btn-block">Cancelar</button>
+	</div>
+</form>

@@ -1,0 +1,90 @@
+<head>
+	<style type="text/css">
+		.etiqueta{
+			font-weight: bold;
+		}
+	</style>
+</head>
+<div class="modal-header">
+	<h3 class="text-center">Detalles del Paciente</h3>
+</div>
+<div class="modal-body">
+		<div class="row">
+			<div cos></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Nombre:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.nombres|capfirstlettereachword]] [[ paciente.apellidos|capfirstlettereachword]]</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Cedula:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.nacionalidad]] - [[paciente.cedula]]</div>
+
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Fecha Nac. :</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.fecha_nacimiento]]</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Sexo:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.sexo|sexoFilter]]</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Direccion:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.direccion]]</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Email:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">
+				[[paciente.email]]
+				<span style="margin-left: 5px;">
+					<a href="" ng-if="paciente.email"><span style="margin:5px;"><i class="fa fa-envelope"></i></span>Enviar Correo</a>
+				</span>
+				
+			</div>
+		</div>		
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Celular:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.celular]]</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-lg-3 etiqueta">Observaciones:</div>
+			<div class="col-xs-6 sol-sm-9 col-lg-9">[[paciente.observaciones]]</div>
+		</div>
+
+<!-- 	<form ng-submit="" name="agrearExamenForm" novalidate>
+
+		<div class="form-group">
+			<label for="nombre" class="sr-only">Nombre de examen</label>
+			<input ng-model="examen.nombre" ng-model-options="modelOptions" uib-typeahead="exam for exam in exams | filter:$viewValue | limitTo:8" typeahead-min-length="1" type="text" id="nombre" placeholder="Nombre de examen"  name="nombre" class="form-control" autofocus>		
+		</div>
+
+		<div class="form-group">
+			<label for="precio" class="sr-only">Costo</label>
+			<input type="number" placeholder="Precio" class="form-control" name="precio" id="precio" ng-model="examen.precio" min="1" required>		
+		</div>
+	</form> -->
+
+	<!--EXAMS TABLE -->
+<!-- 	<table class="table">
+		<thead>
+			<tr>
+				<td>Nombre</td>
+				<td>Costo</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="examen in examenes">
+				<td>[[examen.nombre]]</td>
+				<td>[[examen.costo]]</td>
+			</tr>
+		</tbody>
+	</table> -->
+</div>
+<div class="modal-footer">
+<!-- 	<button class="btn btn-md btn-block btn-success">Aceptar</button> -->
+	<button ng-click="cancel()" class="btn btn-md btn-block btn-danger">Cerrar</button>
+</div>

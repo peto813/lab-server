@@ -1,0 +1,48 @@
+<!--        <head>
+       		<style type="">
+       			#paginatorDiv{
+       				margin:0 auto;
+       				 { text-align: center; }
+       			}
+       			#paginator{
+       				list-style: none;
+       			}
+       			#paginator li { display: inline; }
+       		</style>
+       </head>
+ -->
+        <div class="modal-header">
+            <h4 class="modal-title text-center" id="modal-title">Estudios de [[paciente.nombres|capfirstlettereachword]] [[paciente.apellidos|capfirstlettereachword]]</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+        <table class="table table-responsive table-condensed table-striped table-bordered">
+        	<thead>
+        		<tr style="font-weight: bold;" class="text-center">
+        			<td>Estudio</td>
+        			<td>Fecha Solicitado</td>
+        			<td>Medico Ref.</td>
+        			<td>Clinica Ref.</td>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr ng-repeat="estudio in estudios">
+        			<td>[[estudio.estudio_realizado]]</td>
+        			<td>[[estudio.created|date : 'mediumDate' ]]</td>
+        			<td>[[estudio.medico.nombre|capfirstlettereachword]]</td>
+        			<td>[[estudio.clinica.nombre|capfirstlettereachword]]</td>
+        		</tr>
+        	</tbody>
+        </table>
+
+        <hr>
+
+        <div id="paginatorDiv" class="text-center">
+			<ul last-text="Ultimo" first-text="Primero" uib-pagination direction-links="false" items-per-page="itemsPerPage" boundary-links="false" total-items="count" ng-model="currentPage" ng-change="paginationChange()"></ul>
+        </div>
+		    
+
+        <hr>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger btn-block" type="button" ng-click="cancel()">Cerrar</button>
+        </div>

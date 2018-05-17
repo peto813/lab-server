@@ -1,0 +1,138 @@
+<head>
+	<style type="text/css">
+		.resultsTemplate{
+			border:1px solid black;
+			border-radius: 5px;
+		}
+		.bold{
+			font-weight: bold;
+		}
+		.underline{
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<form ng-submit="agregarResultado()" name="regResultadosForm" autocomplete="off" novalidate>
+
+	<div class="modal-header">
+		<h3 class="text-center">Agregar resultados [[paciente.nombres|capfirstlettereachword]] [[paciente.apellidos|capfirstlettereachword]]</h3>
+	
+	</div>
+	<div class="modal-body">
+		<div class="panel-default">
+<!-- 			<div class="panel-header">
+				<h2>resultados</h2>
+			</div> -->
+			<div class="panel-body">
+	
+				<div class="form-group has-feedback" ng-class="{ 'has-success' : regResultadosForm.estudio_seleccionado.$valid && (regResultadosForm.estudio_seleccionado.$touched || regResultadosForm.$submitted), 'has-error' : !regResultadosForm.estudio_seleccionado.$valid && (regResultadosForm.estudio_seleccionado.$touched || regResultadosForm.$submitted) }" >
+
+					<select class="form-control" ng-model="llenarResultadoFormData.estudio_seleccionado" name="estudio_seleccionado"  ng-change="encontrarResultadosNoImpresos()">
+						<option value="">Seleccione Estudio</option>
+						<option  ng-repeat="estudio in estudios" value="[[estudio.id]]"><b>[[estudio.estudio_realizado.id]] </b> | [[estudio.estudio_realizado.nombre]] | ( [[estudio.estudio_realizado.created|date:'dd/MM/yyyy'|capfirstlettereachword]] )</option>
+					</select>
+					
+				</div>
+		
+
+
+				<div ng-if="estudio_seleccionado_get()=='citologia'">
+
+<!-- 					<form ng-submit="agregarResultadoCitologia()" name="citologiaResultadosForm"  novalidate>-->
+					<div class="form-group has-feedback" ng-class="{ 'has-success' : regResultadosForm.resultados.$valid && (regResultadosForm.resultados.$touched || regResultadosForm.$submitted), 'has-error' : !regResultadosForm.resultados.$valid && (regResultadosForm.resultados.$touched || regResultadosForm.$submitted) }" > 
+						<div class="input-group">
+							<input placeholder="Codigo Resultado de Citologia" type="text" name="resultados" ng-model="llenarResultadoFormData.resultados" ng-pattern="regex" class="form-control" required>
+
+							<div class="input-group-btn">
+								<button ng-disabled="!regResultadosForm.$valid" title="Anexar Prueba"   type="submit" class="btn btn-primary">
+									<i class="fa fa-plus"></i>
+								</button>
+							</div>
+						</div>
+						
+					</div>					
+
+			
+					<table ng-if="resultados_citologias.length>0" class="table table-responsive table-condensed">
+						<thead>
+							<tr>
+								<td class="bold">Borrar</td>
+								<td class="text-center"><b>Codigo</b></td>
+								<td class="text-center"><b>Descripcion</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="resultado_citologia in resultados_citologias|orderBy:'resultado_citologia.codigo.created'">
+								<td><button class="btn btn-danger" ng-click="borrarCodigoCitologia(resultado_citologia.id)"><i class="fa fa-trash"></i></button></td>
+								<td class="text-center" style="border-right: 1px solid black;">[[resultado_citologia.codigo.numero]]</td>
+								<td class="text-center" ng-class="{'bold' : resultado_citologia.codigo.titulo == true, 'underline': resultado_citologia.codigo.titulo == true}">[[resultado_citologia.codigo.descripcion|capitalize]]</td>
+							</tr>
+						</tbody>
+					</table>
+				
+				</div><!--CITOLOGIA RESULTS-->
+			
+
+				<div ng-if="estudio_seleccionado_get()=='biopsia'" name="resultados_biopsias">
+
+
+						<!--TEST CODE-->
+					<div style="margin-top: 10px;" ng-show="f.progress >= 0">
+						<uib-progressbar value="f.progress">[[f.progress]] %</uib-progressbar>
+					</div>
+
+					<div style="height:20px;margin-bottom:15px;">
+						<h4 ng-show="selectedFile" class="text-center"> ( [[selectedFile.size/1000000 | number: 2]] MB )
+						</h4>
+						<div class="text-center">
+							<code ng-show="regResultadosForm.biopsiaArchivoAnexo.$error.required && regResultadosForm.biopsiaArchivoAnexo.$touched"><b>No ha seleccionado un archivo</b></code><br>
+			      			<code ng-show="regResultadosForm.biopsiaArchivoAnexo.$error.maxSize"></b>Archivo muy grande<b></code>
+			      			<code ng-show="regResultadosForm.biopsiaArchivoAnexo.$error.pattern"></b>Tipo de archivo invalido<b> </code>				
+						</div>
+					</div>
+
+
+					<div class="form-group has-feedback" ng-class="{ 'has-success' : regResultadosForm.resultados.$valid && (regResultadosForm.resultados.$touched || regResultadosForm.$submitted), 'has-error' : !regResultadosForm.resultados.$valid && (regResultadosForm.resultados.$touched || regResultadosForm.$submitted) }" > 
+
+						<div class="input-group">
+							<input placeholder="No ha seleccionado archivo" type="text" value="[[selectedFile.name]] " class="form-control"  readonly>
+							<div class="input-group-btn">
+								<button  class="btn btn-default"
+							    ng-model="llenarResultadoFormData.adjunto"
+							    ngf-select="select($event, $file)"
+							    type="button"
+							    ngf-capture="'camera'"
+							    accept="*"
+							    ng-required="true"
+							    ngf-pattern="'*'" 
+							    ngf-max-height="4000" 
+							    ngf-max-size="10MB"
+							    name="biopsiaArchivoAnexo"
+							    >
+							    	Cargar Archivo
+
+								</button>
+							</div>
+						</div>	
+										<!--END TEST CODE-->
+
+					</div><!--FORM GROUP-->
+
+				</div><!--BIOPSIA RESULTS-->
+
+			</div><!--PANEL BODY-->
+		</div><!--PANEL DEFAULT-->
+	</div>
+
+	<div class="modal-footer">
+		<button ng-if="estudio_seleccionado_get()=='citologia'" type="button" ng-click="ImprimirRes()" class="btn btn-success" ng-disabled="resultados_citologias.length==0"><!--ng-disabled="!resultadosFormularioValidacion()"-->
+			<i class="fa fa-print"></i>Imprimir 
+		</button>
+		<button ng-if="estudio_seleccionado_get()=='biopsia'" type="button" ng-click="agregarResBiopsia(llenarResultadoFormData.adjunto)" class="btn btn-success"><!--ng-disabled="!resultadosFormularioValidacion()"-->
+			Guardar 
+		</button>
+		<button type="button" class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+	</div>
+
+
+</form>

@@ -1,0 +1,57 @@
+<div class="container">
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-12" style="margin-bottom: 20px;">
+				<h2 class="text-center">Referencia de precios</h2>
+			</div>
+<!-- 			<div class="col-xs-12 col-sm-4">
+				<h2 class="text-center">Mostrar</h2>
+			</div> -->
+		</div>
+		<div class="row" >
+			<div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+				<div class="input-group">
+					<input class="form-control" type="text" name="search" placeholder="Buscar estudio" ng-model="search">
+					<span class="input-group-addon">
+						<i class="fa fa-search"></i>
+					</span>
+				</div>
+
+			</div>
+				
+			</div>
+		</div>
+		
+		
+		
+	</div>
+  <div class="panel-body">
+	
+		<div class="panel panel-default">
+	<table class="table table-condensed table-striped table-responsive table-bordered">
+		<thead>
+			<tr class="text-center" style="font-weight:bold;">
+				<td>Estudio</td>
+				<td>Tipo</td>
+				<td>Precio</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-center" ng-repeat="precio in precios|filter:search">
+				<td>[[precio.nombre|capitalize]]</td>
+				<td>[[precio.tipo|capitalize]]</td>
+				<td>[[precio.precio|currency:'Bs. ':2]]</td>
+
+			</tr>
+		</tbody>
+	</table>			
+		</div>
+
+
+  </div>
+</div>	
+</div>
+
+

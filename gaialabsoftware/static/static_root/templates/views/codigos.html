@@ -1,0 +1,53 @@
+<div class="container">
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-12" style="margin-bottom: 20px;">
+				<h2 class="text-center">Referencia de codigos de resultados</h2>
+			</div>
+<!-- 			<div class="col-xs-12 col-sm-4">
+				<h2 class="text-center">Mostrar</h2>
+			</div> -->
+		</div>
+		<div class="row" >
+			<div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+				<div class="input-group">
+					<input class="form-control" type="text" name="search" placeholder="Buscar Codigo" ng-model="search">
+					<span class="input-group-addon">
+						<i class="fa fa-search"></i>
+					</span>
+				</div>
+
+			</div>
+				
+			</div>
+		</div>
+		
+		
+		
+	</div>
+  <div class="panel-body">
+	<table class="table table-condensed table-striped table-responsive table-bordered">
+		<thead>
+			<tr style="font-weight:bold;">
+				<td>Numero</td>
+			<!-- 	<td>Nombre</td> -->
+				<td>Descripcion</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="codigo in codigos|filter:search">
+				<td>[[codigo.numero]]</td>
+				<!-- <td>[[codigo.nombre]]</td> -->
+				<td>[[codigo.descripcion]]</td>
+
+			</tr>
+		</tbody>
+	</table>
+
+  </div>
+</div>	
+</div>
+
+

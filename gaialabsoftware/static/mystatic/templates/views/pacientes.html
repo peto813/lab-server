@@ -1,0 +1,88 @@
+
+
+<head>
+	<style type="text/css">
+		.text-nowrap {
+		    white-space: nowrap;
+		}
+		#tableAction{max-width: 200px;}
+	</style>
+</head>
+
+<panel-table 
+	search-url ='api/pacientes/?search='
+	search-field="true" 
+	panel-title="Pacientes"
+	advanced-search = "true"
+	search-date-field="true"
+	placeholder="Buscar"
+	results-list = "listaPacientes"
+>
+
+				<extra-element>
+
+					    <label class="sr-only">Filtrar por:</label>
+					    <select ng-model="transclusion.filtro" name="dateRange">
+					    	<option value="">Filtrar por:</option>
+					    	<option value="postpago">Normal</option>
+					    	<option value="normal">Post Pago</option>
+					    </select>
+
+				</extra-element>
+	<table class="table table-condensed table-striped table-responsive">
+	 		<div class="row" style="max-width:700px;margin:10px;">
+<!-- 	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+			  			<button title = "Add Selection to Shopping cart" type="button"  class="btn btn-success">
+			  				<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+			  			</button>
+	 			</div> -->
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Resetear busqueda" type="button" ng-click="refreshList()" class="btn btn-info">
+							<i class="fa fa-refresh" aria-hidden="true"></i>
+						</button>
+
+	 			</div>
+
+	 			<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+						<button  title="Buscar entre Fechas" type="button" ng-click="filtrarEntreFechasModal('api/pacientes/')" class="btn btn-info">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+						</button>
+	 			</div>
+						<div ng-show="resultados" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+							<!-- <button ng-click="searchByModal()" type="button" class="btn btn-info">Search by:</button> -->
+							<span><b>[[resultados]]</b> resultados encontrados</span>
+						</div>	
+	 		</div>
+		<thead>
+			<tr style="font-weight:bold;">
+				<td>Cedula</td>
+				<td>Nombres</td>
+				<td>Apellidos</td>
+				<td>Acciones</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="paciente in listaPacientes| filter:{tipo:transclusion.filtro}">
+				<td><a href="" ng-click="mostrarDetallesPaciente(paciente)">[[paciente.cedula]]</a></td>
+				<td>[[paciente.nombres|capfirstlettereachword]]</td>
+				<td>[[paciente.apellidos|capfirstlettereachword]]</td>
+				<td>
+					<div class="input-group text-nowrap">
+						<select class="form-control" ng-model="paciente.action" id="tableAction">
+							<option value="">------</option>
+							<option>Ver Estudios</option>
+							<option>Agregar Estudio</option>
+							<option>Agregar Resultados</option>
+						</select>
+						<button ng-disabled="!paciente.action" title="Accion de tabla"  ng-click="tableAction( paciente)" type="button" class="btn btn-primary">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</button>			
+					</div>
+
+				</td>
+<!-- 				<td><button class="btn btn-info" ng-click="mostrarExamenesPaciente(paciente)"><i class="fa fa-file"></i></button></td>
+				<td><button class="btn btn-info" ng-click="agregarResultados(paciente)"><i class="fa fa-flask"></i></button></td> -->
+			</tr>
+		</tbody>
+	</table>
+</panel-table>

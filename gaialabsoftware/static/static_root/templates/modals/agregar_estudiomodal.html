@@ -1,0 +1,85 @@
+<head>
+	<style type="text/css">
+		.resultsTemplate{
+			border:1px solid black;
+			border-radius: 5px;
+		}
+		.bold{
+			font-weight: bold;
+		}
+		.underline{
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<form ng-submit="agregarResultado()" name="regResultadosForm" autocomplete="off" novalidate>
+
+	<div class="modal-header">
+		<h3 class="text-center">Agregar estudio: </h3>
+		<h4 class="text-center">
+			<i>[[paciente.nombres|capfirstlettereachword]] [[paciente.apellidos|capfirstlettereachword]]</i>
+		</h4>
+	
+	</div>
+	<div class="modal-body">
+					 	<div class="well">
+							<form ng-submit="addEstudio()" name="addPruebaForm" autocomplete="off"  novalidate>
+								<div class="row">
+									<div class="col-xs-12 col-sm-4">
+										<div class="form-group has-feedback" ng-class="{ 'has-success' : addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.$submitted), 'has-error' : !addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.$submitted) }" >
+											<label for="doctor_referido" class="sr-only">Medico Referido</label>
+											<input ng-disabled="!patientFound" ng-model="estudioData.medico"  uib-typeahead="medico for medico in medico_referido_typeahead | filter:$viewValue | limitTo:8" type="text" id="medico_referido" placeholder="Medico Refererido"  name="medico_referido" class="form-control" required>
+											<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : addPruebaForm.medico_referido.$valid && (addPruebaForm.medico_referido.$touched || addPruebaForm.medico_referido.$dirty), 'glyphicon-remove': (addPruebaForm.medico_referido.$invalid && (addPruebaForm.medico_referido.$touched || addPruebaForm.medico_referido.$dirty || addPruebaForm.$submitted )) }" aria-hidden="true">
+											</span>
+										</div>	
+									</div>
+									<div class="col-xs-12 col-sm-4">
+										<div class="form-group">
+											<label for="clinica_referida" class="sr-only">Clinica Refererida</label>
+											<input ng-model="estudioData.clinica" ng-model-options="modelOptions" uib-typeahead="clinica for clinica in clinica_referida_typeahead | filter:$viewValue | limitTo:8|unique" typeahead-min-length="0" type="text" id="clinica_referida" placeholder="Clinica Refererida" ng-disabled="!patientFound" name="clinica_referida" class="form-control">
+										</div>				
+									</div>
+									<div class="col-xs-12 col-sm-4">
+										<div class="form-group">
+											<label for="nombre" class="sr-only">Nombre de prueba</label>
+											<select ng-disabled="!patientFound" ng-options="estudio.nombre|capitalize for estudio in estudios track by estudio.id" class="form-control" name="prueba" id="prueba" ng-model="estudioData.prueba" ng-change="fillSubPrueba()" required>
+												 <option value="" disabled>Estudio</option> 
+											</select>
+										</div>
+									</div>
+								</div>
+
+							<div class="form-group has-feedback" ng-class="{ 'has-success' : addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.$submitted), 'has-error' : !addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.$submitted) }" >
+								<div class="input-group">
+									<label for="nombre" class="sr-only">Nombre de sub tipo. prueba</label>
+
+			 						<input ng-disabled="!estudioData.prueba" typeahead-editable="false"  ng-model="estudioData.estudio_realizado" uib-typeahead="estudio.nombre for estudio in subPruebaTypeahead|filter:$viewValue | limitTo:8" typeahead-min-length="4" type="text" id="subprueba" placeholder="Estudio"  name="subprueba" class="form-control" required>
+
+			 						<span class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok' : addPruebaForm.subprueba.$valid && (addPruebaForm.subprueba.$touched || addPruebaForm.subprueba.$dirty), 'glyphicon-remove': (addPruebaForm.subprueba.$invalid && (addPruebaForm.subprueba.$touched || addPruebaForm.subprueba.$dirty || addPruebaForm.$submitted )) }" aria-hidden="true"></span>
+									<div class="input-group-btn">
+										<button ng-disabled="!addPruebaForm.$valid" title="Anexar Estudio"  type="submit" class="btn btn-primary">
+											<i class="fa fa-plus"></i>
+										</button>
+									</div>			
+								</div>
+							</div>	
+
+
+					
+
+							</form>	
+					 	</div>
+	</div>
+
+	<div class="modal-footer">
+		<button ng-if="estudio_seleccionado_get()=='citologia'" type="button" ng-click="ImprimirRes()" class="btn btn-success" ng-disabled="resultados_citologias.length==0">
+			<i class="fa fa-print"></i>Imprimir 
+		</button>
+		<button ng-if="estudio_seleccionado_get()=='biopsia'" type="button" ng-click="agregarResBiopsia(llenarResultadoFormData.adjunto)" class="btn btn-success">
+			Guardar 
+		</button>
+		<button type="button" class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+	</div>
+
+
+</form>

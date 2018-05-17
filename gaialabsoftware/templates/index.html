@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block index %}
+<head>
+  <style type="text/css">
+
+
+
+/*.container {
+    padding: 25px;
+    position: fixed;
+}*/
+
+.form-login {
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color:#d2d2d2;
+    border-width: 5px;
+    box-shadow:0 1px 0 #cfcfcf;
+}
+
+h4 { 
+ border:0 solid #fff; 
+ border-bottom-width:1px;
+ padding-bottom:10px;
+ text-align: center;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+  </style>
+  <title ng-bind="$state.current.data.pageTitle"></title>
+        <!-- Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+
+<!-- <link rel="stylesheet" href="{% static 'css/dist/css/bootstrap-theme.min.css' %}">
+ -->
+                <!--JS PDF-->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script> -->
+
+</head>
+<div id="navbar" ng-include="'static/templates/partials/navbar.html'"></div>
+
+<body>
+  <div class="container">
+    <ui-view class="page [[ pageClass ]]"></ui-view>
+  </div>
+
+
+</body>
+{% endblock index %}
