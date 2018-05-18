@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/
 """
 
 import os, sys
-sys.path.append('/var/www/gaialabsoftware/gaialabsoftware')
+#sys.path.append('/var/www/gaialabsoftware/gaialabsoftware')
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gaialabsoftware.settings")
