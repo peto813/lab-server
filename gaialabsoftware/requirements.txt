@@ -1,6 +1,6 @@
 appdirs==1.4.3
 beautifulsoup4==4.5.3
-Django==1.10.6
+Django==1.11.28
 django-admin-tools==0.8.0
 django-admin-tools-stats==0.8.0
 django-bower==5.2.0
